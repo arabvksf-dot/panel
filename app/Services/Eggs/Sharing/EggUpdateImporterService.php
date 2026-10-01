@@ -31,7 +31,7 @@ class EggUpdateImporterService
             $egg = $this->parser->fillFromParsed($egg, $parsed);
             $egg->save();
 
-            // Update existing variables or create new ones.
+             
             foreach ($parsed['variables'] ?? [] as $variable) {
                 EggVariable::unguarded(function () use ($egg, $variable) {
                     $egg->variables()->updateOrCreate([

@@ -18,6 +18,6 @@ class ForceCronMonthFieldToHaveValueIfMissing extends Migration
      */
     public function down(): void
     {
-        // No down function.
+         
     }
 }

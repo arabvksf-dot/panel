@@ -37,7 +37,7 @@ const checkboxStyle = css<Props>`
 `;
 
 const inputStyle = css<Props>`
-    // Reset to normal styling.
+     
     resize: none;
     ${tw`appearance-none outline-none w-full min-w-0`};
     ${tw`p-3 border-2 rounded text-sm transition-all duration-150`};

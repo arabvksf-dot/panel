@@ -66,8 +66,8 @@ class EggParserService
             return $parsed;
         }
 
-        // Maintain backwards compatability for eggs that are still using the old single image
-        // string format. New eggs can provide an array of Docker images that can be used.
+         
+         
         if (!isset($parsed['images'])) {
             $images = [Arr::get($parsed, 'image') ?? 'nil'];
         } else {

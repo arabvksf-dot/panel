@@ -34,7 +34,7 @@ class StoreServerRequest extends ApplicationApiRequest
             'skip_scripts' => 'sometimes|boolean',
             'oom_disabled' => 'sometimes|boolean',
 
-            // Resource limitations
+             
             'limits' => 'required|array',
             'limits.memory' => $rules['memory'],
             'limits.swap' => $rules['swap'],
@@ -43,17 +43,17 @@ class StoreServerRequest extends ApplicationApiRequest
             'limits.threads' => $rules['threads'],
             'limits.cpu' => $rules['cpu'],
 
-            // Application Resource Limits
+             
             'feature_limits' => 'required|array',
             'feature_limits.databases' => $rules['database_limit'],
             'feature_limits.allocations' => $rules['allocation_limit'],
             'feature_limits.backups' => $rules['backup_limit'],
 
-            // Placeholders for rules added in withValidator() function.
+             
             'allocation.default' => '',
             'allocation.additional.*' => '',
 
-            // Automatic deployment rules
+             
             'deploy' => 'sometimes|required|array',
             'deploy.locations' => 'array',
             'deploy.locations.*' => 'integer|min:1',

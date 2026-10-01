@@ -32,8 +32,8 @@ class UpdateColumnNames extends Migration
             $table->foreign('service_id')->references('id')->on('services');
             $table->foreign('option_id')->references('id')->on('service_options');
 
-            // Pack ID was forgotten until multiple releases later, therefore it is
-            // contained in '2017_03_18_204953_AddForeignKeyToPacks'
+             
+             
         });
     }
 

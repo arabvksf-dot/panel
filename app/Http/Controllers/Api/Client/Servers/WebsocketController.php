@@ -42,12 +42,12 @@ class WebsocketController extends ClientApiController
 
         $node = $server->node;
         if (!is_null($server->transfer)) {
-            // Check if the user has permissions to receive transfer logs.
+             
             if (!in_array('admin.websocket.transfer', $permissions)) {
                 throw new HttpForbiddenException('You do not have permission to view server transfer logs.');
             }
 
-            // Redirect the websocket request to the new node if the server has been archived.
+             
             if ($server->transfer->archived) {
                 $node = $server->transfer->newNode;
             }

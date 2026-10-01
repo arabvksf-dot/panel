@@ -19,8 +19,8 @@ class TestResponse extends IlluminateTestResponse
     {
         $actual = $this->getStatusCode();
 
-        // Dump the response to the screen before making the assertion which is going
-        // to fail so that debugging isn't such a nightmare.
+         
+         
         if ($actual !== $status && $status !== 500) {
             $this->dump();
             if (!is_null($this->exception) && !$this->exception instanceof DisplayException && !$this->exception instanceof ValidationException) {

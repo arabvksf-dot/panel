@@ -39,7 +39,7 @@ class ProcessScheduleServiceTest extends IntegrationTestCase
         /** @var Schedule $schedule */
         $schedule = Schedule::factory()->create([
             'server_id' => $server->id,
-            'cron_minute' => 'hodor', // this will break the getNextRunDate() function.
+            'cron_minute' => 'hodor',  
         ]);
 
         /** @var Task $task */
@@ -74,7 +74,7 @@ class ProcessScheduleServiceTest extends IntegrationTestCase
         Bus::assertDispatched(RunTaskJob::class, function ($job) use ($now, $task) {
             $this->assertInstanceOf(RunTaskJob::class, $job);
             $this->assertSame($task->id, $job->task->id);
-            // Jobs using dispatchNow should not have a delay associated with them.
+             
             $this->assertSame($now ? null : 10, $job->delay);
 
             return true;

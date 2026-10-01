@@ -38,12 +38,12 @@ const EditSubuserModal = ({ subuser }: Props) => {
 
     const isRootAdmin = useStoreState((state) => state.user.data!.rootAdmin);
     const permissions = useStoreState((state) => state.permissions.data);
-    // The currently logged in user's permissions. We're going to filter out any permissions
-    // that they should not need.
+     
+     
     const loggedInPermissions = ServerContext.useStoreState((state) => state.server.permissions);
     const [canEditUser] = usePermissions(subuser ? ['user.update'] : ['user.create']);
 
-    // The permissions that can be modified by this user.
+     
     const editablePermissions = useDeepCompareMemo(() => {
         const cleaned = Object.keys(permissions).map((key) =>
             Object.keys(permissions[key].keys).map((pkey) => `${key}.${pkey}`)

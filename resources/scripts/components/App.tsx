@@ -1,4 +1,4 @@
-import React, { lazy } from 'react';
+import React, { lazy, useEffect } from 'react';
 import { hot } from 'react-hot-loader/root';
 import { Route, Router, Switch } from 'react-router-dom';
 import { StoreProvider } from 'easy-peasy';
@@ -14,6 +14,10 @@ import AuthenticatedRoute from '@/components/elements/AuthenticatedRoute';
 import { ServerContext } from '@/state/server';
 import '@/assets/tailwind.css';
 import Spinner from '@/components/elements/Spinner';
+import applyPreferences from '@/helpers/preferences';
+import { AccountAppearance } from '@/api/account/updateAccountPreferences';
+import LanguageOnboarding from '@/components/dashboard/LanguageOnboarding';
+import AiAssistant from '@/components/dashboard/AiAssistant';
 
 const DashboardRouter = lazy(() => import(/* webpackChunkName: "dashboard" */ '@/routers/DashboardRouter'));
 const ServerRouter = lazy(() => import(/* webpackChunkName: "server" */ '@/routers/ServerRouter'));
@@ -29,6 +33,9 @@ interface ExtendedWindow extends Window {
         root_admin: boolean;
         use_totp: boolean;
         language: string;
+        appearance: AccountAppearance;
+        onboarding_completed: boolean;
+        discord_linked: boolean;
         updated_at: string;
         created_at: string;
         /* eslint-enable camelcase */
@@ -45,6 +52,9 @@ const App = () => {
             username: PterodactylUser.username,
             email: PterodactylUser.email,
             language: PterodactylUser.language,
+            appearance: PterodactylUser.appearance,
+            onboardingCompleted: PterodactylUser.onboarding_completed,
+            discordLinked: PterodactylUser.discord_linked,
             rootAdmin: PterodactylUser.root_admin,
             useTotp: PterodactylUser.use_totp,
             createdAt: new Date(PterodactylUser.created_at),
@@ -55,6 +65,16 @@ const App = () => {
     if (!store.getState().settings.data) {
         store.getActions().settings.setSettings(SiteConfiguration!);
     }
+
+    useEffect(() => {
+        if (PterodactylUser) {
+            applyPreferences(
+                PterodactylUser.language,
+                PterodactylUser.appearance,
+                SiteConfiguration?.appearanceEnabled ?? true
+            );
+        }
+    }, [PterodactylUser]);
 
     return (
         <>
@@ -87,6 +107,8 @@ const App = () => {
                         </Switch>
                     </Router>
                 </div>
+                <LanguageOnboarding />
+                <AiAssistant />
             </StoreProvider>
         </>
     );

@@ -34,9 +34,9 @@ class FindAssignableAllocationService
             throw new AutoAllocationNotEnabledException();
         }
 
-        // Attempt to find a given available allocation for a server. If one cannot be found
-        // we will fall back to attempting to create a new allocation that can be used for the
-        // server.
+         
+         
+         
         /** @var Allocation|null $allocation */
         $allocation = $server->node->allocations()
             ->lockForUpdate()
@@ -75,16 +75,16 @@ class FindAssignableAllocationService
         Assert::integerish($start);
         Assert::integerish($end);
 
-        // Get all of the currently allocated ports for the node so that we can figure out
-        // which port might be available.
+         
+         
         $ports = $server->node->allocations()
             ->where('ip', $server->allocation->ip)
             ->whereBetween('port', [$start, $end])
             ->pluck('port');
 
-        // Compute the difference of the range and the currently created ports, finding
-        // any port that does not already exist in the database. We will then use this
-        // array of ports to create a new allocation to assign to the server.
+         
+         
+         
         $available = array_diff(range($start, $end), $ports->toArray());
 
         // If we've already allocated all of the ports, just abort.
@@ -92,7 +92,7 @@ class FindAssignableAllocationService
             throw new NoAutoAllocationSpaceAvailableException();
         }
 
-        // Pick a random port out of the remaining available ports.
+         
         /** @var int $port */
         $port = $available[array_rand($available)];
 

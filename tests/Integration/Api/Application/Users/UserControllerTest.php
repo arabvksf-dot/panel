@@ -166,7 +166,7 @@ class UserControllerTest extends ApplicationApiIntegrationTestCase
             ],
         ]);
 
-        // Just assert that we see the expected relationship IDs in the response.
+         
         $response->assertJson([
             'attributes' => [
                 'relationships' => [

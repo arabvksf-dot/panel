@@ -35,17 +35,17 @@ class ResourceBelongsToServer
         $server = $request->route()->parameter('server');
         $exception = new NotFoundHttpException('The requested resource was not found for this server.');
         foreach ($params as $key => $model) {
-            // Specifically skip the server, we're just trying to see if all of the
-            // other resources are assigned to this server. Also skip anything that
-            // is not currently a Model instance since those will just end up being
-            // a 404 down the road.
+             
+             
+             
+             
             if ($key === 'server' || !$model instanceof Model) {
                 continue;
             }
 
             switch (get_class($model)) {
-                // All of these models use "server_id" as the field key for the server
-                // they are assigned to, so the logic is identical for them all.
+                 
+                 
                 case Allocation::class:
                 case Backup::class:
                 case Database::class:
@@ -55,19 +55,19 @@ class ResourceBelongsToServer
                         throw $exception;
                     }
                     break;
-                    // Regular users are a special case here as we need to make sure they're
-                    // currently assigned as a subuser on the server.
+                     
+                     
                 case User::class:
                     $subuser = $server->subusers()->where('user_id', $model->id)->first();
                     if (is_null($subuser)) {
                         throw $exception;
                     }
-                    // This is a special case to avoid an additional query being triggered
-                    // in the underlying logic.
+                     
+                     
                     $request->attributes->set('subuser', $subuser);
                     break;
-                    // Tasks are special since they're (currently) the only item in the API
-                    // that requires something in addition to the server in order to be accessed.
+                     
+                     
                 case Task::class:
                     $schedule = $request->route()->parameter('schedule');
                     if (!$schedule instanceof Schedule || $model->schedule_id !== $schedule->id || $schedule->server_id !== $server->id) {
@@ -75,8 +75,8 @@ class ResourceBelongsToServer
                     }
                     break;
                 default:
-                    // Don't return a 404 here since we want to make sure no one relies
-                    // on this middleware in a context in which it will not work. Fail safe.
+                     
+                     
                     throw new \InvalidArgumentException('There is no handler configured for a resource of this type: ' . get_class($model));
             }
         }

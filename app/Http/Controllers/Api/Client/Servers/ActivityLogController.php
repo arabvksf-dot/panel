@@ -29,8 +29,8 @@ class ActivityLogController extends ClientApiController
             ->allowedFilters([AllowedFilter::partial('event')])
             ->whereNotIn('activity_logs.event', ActivityLog::DISABLED_EVENTS)
             ->when(config('activity.hide_admin_activity'), function (Builder $builder) use ($server) {
-                // We could do this with a query and a lot of joins, but that gets pretty
-                // painful so for now we'll execute a simpler query.
+                 
+                 
                 $subusers = $server->subusers()->pluck('user_id')->merge($server->owner_id);
 
                 $builder->select('activity_logs.*')

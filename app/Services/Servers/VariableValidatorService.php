@@ -29,8 +29,8 @@ class VariableValidatorService
     {
         $query = EggVariable::query()->where('egg_id', $egg);
         if (!$this->isUserLevel(User::USER_LEVEL_ADMIN)) {
-            // Don't attempt to validate variables if they aren't user editable,
-            // and we're not running this at an admin level.
+             
+             
             $query = $query->where('user_editable', true)->where('user_viewable', true);
         }
 

@@ -48,7 +48,7 @@ class ServerTransferController extends Controller
         $allocation_id = intval($validatedData['allocation_id']);
         $additional_allocations = array_map('intval', $validatedData['allocation_additional'] ?? []);
 
-        // Check if the node is viable for the transfer.
+         
         $node = $this->nodeRepository->getNodeWithResourceUsage($node_id);
         if (!$node->isViable($server->memory, $server->disk)) {
             $this->alert->danger(trans('admin/server.alerts.transfer_not_viable'))->flash();
@@ -59,7 +59,7 @@ class ServerTransferController extends Controller
         $server->validateTransferState();
 
         $this->connection->transaction(function () use ($server, $node_id, $allocation_id, $additional_allocations) {
-            // Create a new ServerTransfer entry.
+             
             $transfer = new ServerTransfer();
 
             $transfer->server_id = $server->id;
@@ -72,17 +72,17 @@ class ServerTransferController extends Controller
 
             $transfer->save();
 
-            // Add the allocations to the server, so they cannot be automatically assigned while the transfer is in progress.
+             
             $this->assignAllocationsToServer($server, $node_id, $allocation_id, $additional_allocations);
 
-            // Generate a token for the destination node that the source node can use to authenticate with.
+             
             $token = $this->nodeJWTService
                 ->setExpiresAt(CarbonImmutable::now()->addMinutes(15))
                 ->setSubject($server->uuid)
                 ->setScopes(JwtScope::ServerTransfer)
                 ->handle($transfer->newNode, $server->uuid);
 
-            // Notify the source node of the pending outgoing transfer.
+             
             $this->daemonTransferRepository->setServer($server)->notify($transfer->newNode, $token);
 
             return $transfer;

@@ -91,7 +91,7 @@ class CreateServerSubuserTest extends ClientApiIntegrationTestCase
             'email' => $this->faker->email,
             'permissions' => [
                 Permission::ACTION_USER_CREATE,
-                Permission::ACTION_USER_UPDATE, // This permission is not assigned to the subuser.
+                Permission::ACTION_USER_UPDATE,  
             ],
         ]);
 
@@ -107,16 +107,16 @@ class CreateServerSubuserTest extends ClientApiIntegrationTestCase
     {
         [$user, $server] = $this->generateTestAccount();
 
-        /*
-         * RFCs limit certain parts of an email to certain character limits.
-         *
-         * A limit of <= 64 for the local, then <= 63 for each domain label.
-         * We will stay below the limit to make sure we're within the 191 column limit for emails.
-         */
+        
+
+
+
+
+
         $local = str_repeat(Str::random(10), 6) . '1234';
         $label = str_repeat(Str::random(10), 6) . '1';
 
-        // Make sure we're within the column limit
+         
         $email = "$local@$label.$label.au";
 
         $this->assertSame(64, strlen($local));
@@ -132,7 +132,7 @@ class CreateServerSubuserTest extends ClientApiIntegrationTestCase
 
         $response->assertOk();
 
-        // Exceed column limit of 1 >= and <= 191
+         
         $email = "$local@$label.$label.com";
 
         $this->assertSame(192, strlen($email));

@@ -58,7 +58,7 @@ class ServerTransformer extends BaseTransformer
             'name' => $server->name,
             'description' => $server->description,
             'status' => $server->status,
-            // This field is deprecated, please use "status".
+             
             'suspended' => $server->isSuspended(),
             'limits' => [
                 'memory' => $server->memory,
@@ -82,7 +82,7 @@ class ServerTransformer extends BaseTransformer
             'container' => [
                 'startup_command' => $server->startup,
                 'image' => $server->image,
-                // This field is deprecated, please use "status".
+                 
                 'installed' => $server->isInstalled() ? 1 : 0,
                 'environment' => $this->environmentService->handle($server),
                 'skip_scripts' => $server->skip_scripts,

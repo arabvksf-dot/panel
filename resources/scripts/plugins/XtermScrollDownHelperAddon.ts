@@ -23,7 +23,8 @@ export class ScrollDownHelperAddon implements ITerminalAddon {
     }
 
     dispose(): void {
-        // ignore
+        this.element?.remove();
+        this.element = undefined;
     }
 
     show(): void {
@@ -45,8 +46,8 @@ export class ScrollDownHelperAddon implements ITerminalAddon {
         this.element.style.bottom = '.5rem';
         this.element.style.padding = '.5rem';
         this.element.style.fontSize = '1.25em';
-        this.element.style.boxShadow = '0 2px 8px #000';
-        this.element.style.backgroundColor = '#252526';
+        this.element.style.boxShadow = '0 2px 8px var(--color-black)';
+        this.element.style.backgroundColor = 'var(--color-surface-raised)';
         this.element.style.zIndex = '999';
         this.element.style.cursor = 'pointer';
 

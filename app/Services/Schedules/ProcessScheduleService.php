@@ -43,8 +43,8 @@ class ProcessScheduleService
 
         $job = new RunTaskJob($task, $now);
         if ($schedule->only_when_online) {
-            // Check that the server is currently in a starting or running state before executing
-            // this schedule if this option has been set.
+             
+             
             try {
                 $details = $this->serverRepository->setServer($schedule->server)->getDetails();
                 $state = $details['state'] ?? 'offline';
@@ -57,8 +57,8 @@ class ProcessScheduleService
             } catch (\Exception $exception) {
                 if (!$exception instanceof DaemonConnectionException) {
                     // If we encountered some exception during this process that wasn't just an
-                    // issue connecting to Wings run the failed sequence for a job. Otherwise we
-                    // can just quietly mark the task as completed without actually running anything.
+                     
+                     
                     $job->failed($exception);
                 }
                 $job->failed();
@@ -70,9 +70,9 @@ class ProcessScheduleService
         if (!$now) {
             $this->dispatcher->dispatch($job->delay($task->time_offset));
         } else {
-            // When using dispatchNow the RunTaskJob::failed() function is not called automatically
-            // so we need to manually trigger it and then continue with the exception throw.
-            //
+             
+             
+             
             // @see https://github.com/pterodactyl/panel/issues/2550
             try {
                 $this->dispatcher->dispatchNow($job);

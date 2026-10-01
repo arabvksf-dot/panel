@@ -46,9 +46,9 @@ class ServerDeletionService
             $this->daemonServerRepository->setServer($server)->delete();
         } catch (DaemonConnectionException $exception) {
             // If there is an error not caused a 404 error and this isn't a forced delete,
-            // go ahead and bail out. We specifically ignore a 404 since that can be assumed
-            // to be a safe error, meaning the server doesn't exist at all on Wings so there
-            // is no reason we need to bail out from that.
+             
+             
+             
             if (!$this->force && $exception->getStatusCode() !== Response::HTTP_NOT_FOUND) {
                 throw $exception;
             }
@@ -65,11 +65,11 @@ class ServerDeletionService
                         throw $exception;
                     }
 
-                    // Oh well, just try to delete the database entry we have from the database
-                    // so that the server itself can be deleted. This will leave it dangling on
-                    // the host instance, but we couldn't delete it anyways so not sure how we would
-                    // handle this better anyways.
-                    //
+                     
+                     
+                     
+                     
+                     
                     // @see https://github.com/pterodactyl/panel/issues/2085
                     $database->delete();
 
@@ -77,7 +77,7 @@ class ServerDeletionService
                 }
             }
 
-            // clear any allocation notes for the server
+             
             $server->allocations()->update(['notes' => null]);
 
 

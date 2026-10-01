@@ -34,6 +34,6 @@ class MigrateToNewServiceSystem extends Migration
      */
     public function down(): void
     {
-        // Not doing reversals right now...
+         
     }
 }

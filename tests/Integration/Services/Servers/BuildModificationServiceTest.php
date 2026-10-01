@@ -43,36 +43,36 @@ class BuildModificationServiceTest extends IntegrationTestCase
         $initialAllocationId = $server->allocation_id;
         $allocations[0]->update(['server_id' => $server->id, 'notes' => 'Test notes']);
 
-        // Some additional test allocations for the other server, not the server we are attempting
-        // to modify.
+         
+         
         $allocations[2]->update(['server_id' => $server2->id]);
         $allocations[3]->update(['server_id' => $server2->id]);
 
         $this->daemonServerRepository->expects('setServer->sync')->andReturnUndefined();
 
         $response = $this->getService()->handle($server, [
-            // Attempt to add one new allocation, and an allocation assigned to another server. The
-            // other server allocation should be ignored, and only the allocation for this server should
-            // be used.
+             
+             
+             
             'add_allocations' => [$allocations[2]->id, $allocations[1]->id],
-            // Remove the default server allocation, ensuring that the new allocation passed through
-            // in the data becomes the default allocation.
+             
+             
             'remove_allocations' => [$server->allocation_id, $allocations[0]->id, $allocations[3]->id],
         ]);
 
         $this->assertInstanceOf(Server::class, $response);
 
-        // Only one allocation should exist for this server now.
+         
         $this->assertCount(1, $response->allocations);
         $this->assertSame($allocations[1]->id, $response->allocation_id);
         $this->assertNull($response->allocation->notes);
 
-        // These two allocations should not have been touched.
+         
         $this->assertDatabaseHas('allocations', ['id' => $allocations[2]->id, 'server_id' => $server2->id]);
         $this->assertDatabaseHas('allocations', ['id' => $allocations[3]->id, 'server_id' => $server2->id]);
 
-        // Both of these allocations should have been removed from the server, and have had their
-        // notes properly reset.
+         
+         
         $this->assertDatabaseHas('allocations', ['id' => $initialAllocationId, 'server_id' => null, 'notes' => null]);
         $this->assertDatabaseHas('allocations', ['id' => $allocations[0]->id, 'server_id' => null, 'notes' => null]);
     }

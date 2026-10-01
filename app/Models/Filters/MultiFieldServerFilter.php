@@ -29,8 +29,8 @@ class MultiFieldServerFilter implements Filter
 
         if (preg_match(self::IPV4_REGEX, $value) || preg_match('/^:\d{1,5}$/', $value)) {
             $query
-                // Only select the server values, otherwise you'll end up merging the allocation and
-                // server objects together, resulting in incorrect behavior and returned values.
+                 
+                 
                 ->select('servers.*')
                 ->join('allocations', 'allocations.server_id', '=', 'servers.id')
                 ->where(function (Builder $builder) use ($value) {
@@ -38,7 +38,7 @@ class MultiFieldServerFilter implements Filter
 
                     $builder->when(
                         !Str::startsWith($value, ':'),
-                        // When the string does not start with a ":" it means we're looking for an IP or IP:Port
+                         
                         // combo, so use a query to handle that.
                         function (Builder $builder) use ($parts) {
                             $builder->orWhere('allocations.ip', $parts[0]);

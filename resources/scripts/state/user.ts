@@ -1,11 +1,15 @@
 import { Action, action, Thunk, thunk } from 'easy-peasy';
 import updateAccountEmail from '@/api/account/updateAccountEmail';
+import { AccountAppearance } from '@/api/account/updateAccountPreferences';
 
 export interface UserData {
     uuid: string;
     username: string;
     email: string;
     language: string;
+    appearance: AccountAppearance;
+    onboardingCompleted: boolean;
+    discordLinked: boolean;
     rootAdmin: boolean;
     useTotp: boolean;
     createdAt: Date;

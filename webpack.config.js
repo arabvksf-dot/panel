@@ -81,8 +81,8 @@ module.exports = {
         ],
     },
     stats: {
-        // Ignore warnings emitted by "source-map-loader" when trying to parse source maps from
-        // JS plugins we use, namely brace editor.
+         
+         
         warningsFilter: [/Failed to parse source map/],
     },
     resolve: {
@@ -95,8 +95,8 @@ module.exports = {
         symlinks: false,
     },
     externals: {
-        // Mark moment as an external to exclude it from the Chart.js build since we don't need to use
-        // it for anything.
+         
+         
         moment: 'moment',
     },
     plugins: [

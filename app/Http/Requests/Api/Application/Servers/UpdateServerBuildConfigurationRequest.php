@@ -26,9 +26,9 @@ class UpdateServerBuildConfigurationRequest extends ServerWriteRequest
             'limits.threads' => $this->requiredToOptional('threads', $rules['threads'], true),
             'limits.disk' => $this->requiredToOptional('disk', $rules['disk'], true),
 
-            // Legacy rules to maintain backwards compatable API support without requiring
-            // a major version bump.
-            //
+             
+             
+             
             // @see https://github.com/pterodactyl/panel/issues/1500
             'memory' => $this->requiredToOptional('memory', $rules['memory']),
             'swap' => $this->requiredToOptional('swap', $rules['swap']),
@@ -62,7 +62,7 @@ class UpdateServerBuildConfigurationRequest extends ServerWriteRequest
         $data['backup_limit'] = $data['feature_limits']['backups'] ?? null;
         unset($data['allocation'], $data['feature_limits']);
 
-        // Adjust the limits field to match what is expected by the model.
+         
         if (!empty($data['limits'])) {
             foreach ($data['limits'] as $key => $value) {
                 $data[$key] = $value;

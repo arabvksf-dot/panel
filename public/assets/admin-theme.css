@@ -1,0 +1,98 @@
+@font-face {
+    font-family: 'Cairo';
+    font-style: normal;
+    font-weight: 400 700;
+    font-display: swap;
+    src: url('/assets/fonts/Cairo-arabic.woff2') format('woff2');
+    unicode-range: U+0600-06FF,U+0750-077F,U+0870-088E,U+0890-0891,U+0897-08E1,U+08E3-08FF,U+200C-200E,U+2010-2011,U+204F,U+2E41,U+FB50-FDFF,U+FE70-FE74,U+FE76-FEFC;
+}
+
+@font-face {
+    font-family: 'Cairo';
+    font-style: normal;
+    font-weight: 400 700;
+    font-display: swap;
+    src: url('/assets/fonts/Cairo-latin.woff2') format('woff2');
+}
+
+body,
+button,
+input,
+select,
+textarea,
+.content-wrapper,
+.main-header,
+.main-sidebar {
+    font-family: 'Cairo', Tahoma, sans-serif;
+}
+
+body,
+.content-wrapper,
+.right-side {
+    background: var(--gradient-page);
+    color: var(--color-text);
+}
+
+.main-header,
+.main-header .navbar,
+.main-header .logo,
+.main-sidebar,
+.left-side {
+    background-color: var(--color-surface) !important;
+}
+
+.main-header .logo,
+.main-header .navbar .nav > li > a,
+.sidebar-menu > li > a,
+.sidebar-menu .header {
+    color: var(--color-text) !important;
+}
+
+.sidebar-menu > li.active > a,
+.sidebar-menu > li:hover > a {
+    border-left-color: var(--color-accent) !important;
+    color: var(--color-secondary) !important;
+}
+
+.content-wrapper .box,
+.content-wrapper .small-box,
+.content-wrapper .info-box {
+    border: 1px solid var(--color-border);
+    border-radius: var(--radius-medium);
+    background-color: var(--color-surface-glass);
+    color: var(--color-text);
+    box-shadow: var(--shadow-panel);
+}
+
+.content-wrapper .box-header,
+.content-wrapper .box-footer,
+.content-wrapper .box-body,
+.table > thead > tr > th,
+.table > tbody > tr > td {
+    border-color: var(--color-border);
+    color: inherit;
+}
+
+.form-control,
+.select2-container--default .select2-selection {
+    border-color: var(--color-border);
+    border-radius: var(--radius-small);
+    background-color: var(--color-surface-raised);
+    color: var(--color-text);
+}
+
+.btn-primary {
+    border-color: var(--color-accent);
+    background-color: var(--color-accent);
+    color: var(--color-background);
+    font-weight: 600;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+    }
+}

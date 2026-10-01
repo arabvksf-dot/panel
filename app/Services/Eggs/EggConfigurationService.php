@@ -73,19 +73,19 @@ class EggConfigurationService
 
     protected function replacePlaceholders(Server $server, object $configs): array
     {
-        // Get the legacy configuration structure for the server so that we
-        // can property map the egg placeholders to values.
+         
+         
         $structure = $this->configurationStructureService->handle($server, [], true);
 
         $response = [];
-        // Normalize the output of the configuration for the new Wings Daemon to more
-        // easily ingest, as well as make things more flexible down the road.
+         
+         
         foreach ($configs as $file => $data) {
             // Try to head off any errors relating to parsing a set of configuration files
-            // or other JSON data for the egg. This should probably be blocked at the time
-            // of egg creation/update, but it isn't so this check will at least prevent a
-            // 500 error which would crash the entire Wings boot process.
-            //
+             
+             
+             
+             
             // @see https://github.com/pterodactyl/panel/issues/3055
             if (!is_object($data) || !isset($data->find)) {
                 continue;
@@ -145,7 +145,7 @@ class EggConfigurationService
                 $replace = 'server.build.default.port';
                 break;
             default:
-                // By default, we don't need to change anything, only if we ended up matching a specific legacy item.
+                 
                 $replace = $key;
         }
 
@@ -157,31 +157,31 @@ class EggConfigurationService
         preg_match_all('/{{(?<key>[\w.-]*)}}/', $value, $matches);
 
         foreach ($matches['key'] as $key) {
-            // Matched something in {{server.X}} format, now replace that with the actual
-            // value from the server properties.
-            //
-            // The Daemon supports server.X, env.X, and config.X placeholders.
+             
+             
+             
+             
             if (!Str::startsWith($key, ['server.', 'env.', 'config.'])) {
                 continue;
             }
 
-            // Don't do a replacement on anything that is not a string, we don't want to unintentionally
-            // modify the resulting output.
+             
+             
             if (!is_string($value)) {
                 continue;
             }
 
             $value = $this->replaceLegacyModifiers($key, $value);
 
-            // We don't want to do anything with config keys since the Daemon will need to handle
-            // that. For example, the Spigot egg uses "config.docker.interface" to identify the Docker
-            // interface to proxy through, but the Panel would be unaware of that.
+             
+             
+             
             if (Str::startsWith($key, 'config.')) {
                 continue;
             }
 
-            // Replace anything starting with "server." with the value out of the server configuration
-            // array that used to be created for the old daemon.
+             
+             
             if (Str::startsWith($key, 'server.')) {
                 $plucked = Arr::get($structure, preg_replace('/^server\./', '', $key), '');
 
@@ -190,7 +190,7 @@ class EggConfigurationService
             }
 
             // Finally, replace anything starting with env. with the expected environment
-            // variable from the server configuration.
+             
             $plucked = Arr::get(
                 $structure,
                 preg_replace('/^env\./', 'build.env.', $key),
@@ -215,11 +215,11 @@ class EggConfigurationService
         }
 
         // Remember, in PHP objects are always passed by reference, so if we do not clone this object
-        // instance we'll end up making modifications to the object outside the scope of this function
-        // which leads to some fun behavior in the parser.
+         
+         
         if (is_array($data)) {
-            // Copy the array.
-            // NOTE: if the array contains any objects, they will be passed by reference.
+             
+             
             $clone = $data;
         } else {
             $clone = clone $data;

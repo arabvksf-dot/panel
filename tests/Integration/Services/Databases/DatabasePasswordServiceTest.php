@@ -61,12 +61,12 @@ class DatabasePasswordServiceTest extends IntegrationTestCase
 
         $response = $this->getService()->handle($database);
 
-        // The new password is returned, set on the host, and stored.
+         
         $this->assertSame(24, strlen($response));
         $this->assertSame($response, $password);
         $this->assertSame($response, decrypt($database->refresh()->password));
 
-        // Other databases are untouched.
+         
         $this->assertSame('unchanged', decrypt($other->refresh()->password));
     }
 

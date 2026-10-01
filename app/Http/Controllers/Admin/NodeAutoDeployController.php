@@ -35,8 +35,8 @@ class NodeAutoDeployController extends Controller
             ->where('r_nodes', 3)
             ->first();
 
-        // We couldn't find a key that exists for this user with read and write
-        // permission for nodes. Go ahead and create it now.
+         
+         
         if (!$key) {
             $key = $this->keyCreationService->setKeyType(ApiKey::TYPE_APPLICATION)->handle([
                 'user_id' => $request->user()->id,

@@ -137,7 +137,7 @@ class UserController extends Controller
     {
         $users = QueryBuilder::for(User::query())->allowedFilters(['email'])->paginate(25);
 
-        // Handle single user requests.
+         
         if ($request->query('user_id')) {
             $user = User::query()->findOrFail($request->input('user_id'));
             // @phpstan-ignore-next-line property.notFound

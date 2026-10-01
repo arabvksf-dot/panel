@@ -36,14 +36,14 @@ class EnvironmentService
             return [$variable->env_variable => $variable->server_value ?? $variable->default_value];
         });
 
-        // Process environment variables defined in this file. This is done first
-        // in order to allow run-time and config defined variables to take
-        // priority over built-in values.
+         
+         
+         
         foreach ($this->getEnvironmentMappings() as $key => $object) {
             $variables->put($key, object_get($server, $object));
         }
 
-        // Process variables set in the configuration file.
+         
         foreach (config('pterodactyl.environment_variables', []) as $key => $object) {
             $variables->put(
                 $key,
@@ -51,7 +51,7 @@ class EnvironmentService
             );
         }
 
-        // Process dynamically included environment variables.
+         
         foreach ($this->additional as $key => $closure) {
             $variables->put($key, call_user_func($closure, $server));
         }

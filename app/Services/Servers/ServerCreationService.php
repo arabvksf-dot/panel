@@ -52,14 +52,14 @@ class ServerCreationService
     public function handle(array $data, ?DeploymentObject $deployment = null): Server
     {
         // If a deployment object has been passed we need to get the allocation
-        // that the server should use, and assign the node from that allocation.
+         
         if ($deployment instanceof DeploymentObject) {
             $allocation = $this->configureDeployment($data, $deployment);
             $data['allocation_id'] = $allocation->id;
             $data['node_id'] = $allocation->node_id;
         }
 
-        // Auto-configure the node based on the selected allocation
+         
         // if no node was defined.
         if (empty($data['node_id'])) {
             Assert::false(empty($data['allocation_id']), 'Expected a non-empty allocation_id in server creation data.');
@@ -77,14 +77,14 @@ class ServerCreationService
             ->setUserLevel(User::USER_LEVEL_ADMIN)
             ->handle(Arr::get($data, 'egg_id'), Arr::get($data, 'environment', []));
 
-        // Due to the design of the Daemon, we need to persist this server to the disk
-        // before we can actually create it on the Daemon.
-        //
+         
+         
+         
         // If that connection fails out we will attempt to perform a cleanup by just
-        // deleting the server itself from the system.
+         
         /** @var Server $server */
         $server = $this->connection->transaction(function () use ($data, $eggVariableData) {
-            // Create the server and assign any additional allocations to it.
+             
             $server = $this->createModel($data);
 
             $this->storeAssignedAllocations($server, $data);

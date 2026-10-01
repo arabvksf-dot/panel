@@ -75,8 +75,8 @@ class ServerCreationServiceTest extends IntegrationTestCase
         ]);
 
         $egg = $this->cloneEggAndVariables($this->bungeecord);
-        // We want to make sure that the validator service runs as an admin, and not as a regular
-        // user when saving variables.
+         
+         
         $egg->variables()->first()->update([
             'user_editable' => false,
         ]);

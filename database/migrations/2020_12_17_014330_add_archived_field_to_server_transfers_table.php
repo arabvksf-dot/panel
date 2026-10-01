@@ -16,7 +16,7 @@ class AddArchivedFieldToServerTransfersTable extends Migration
             $table->boolean('archived')->default(0)->after('new_additional_allocations');
         });
 
-        // Update archived to all be true on existing transfers.
+         
         DB::table('server_transfers')->where('successful', true)->update(['archived' => 1]);
     }
 

@@ -76,7 +76,7 @@ class TwoFactorControllerTest extends ClientApiIntegrationTestCase
         /** @var User $user */
         $user = User::factory()->create(['use_totp' => false]);
 
-        // Make the initial call to get the account setup for 2FA.
+         
         $this->actingAs($user)->getJson('/api/client/account/two-factor')->assertOk();
 
         $user = $user->refresh();
@@ -102,9 +102,9 @@ class TwoFactorControllerTest extends ClientApiIntegrationTestCase
         $tokens = RecoveryToken::query()->where('user_id', $user->id)->get();
         $this->assertCount(10, $tokens);
         $this->assertStringStartsWith('$2y$10$', $tokens[0]->token);
-        // Ensure the recovery tokens that were created include a "created_at" timestamp
-        // value on them.
-        //
+         
+         
+         
         // @see https://github.com/pterodactyl/panel/issues/3163
         $this->assertNotNull($tokens[0]->created_at);
 

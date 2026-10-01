@@ -115,9 +115,9 @@ class ScheduleController extends ClientApiController
             'next_run_at' => $this->getNextRunAt($request),
         ];
 
-        // Toggle the processing state of the scheduled task when it is enabled or disabled so that an
-        // invalid state can be reset without manual database intervention.
-        //
+         
+         
+         
         // @see https://github.com/pterodactyl/panel/issues/2425
         if ($schedule->is_active !== $active) {
             $data['is_processing'] = false;

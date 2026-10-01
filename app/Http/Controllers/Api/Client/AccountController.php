@@ -6,8 +6,12 @@ use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Auth\AuthManager;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Validation\Rule;
 use Pterodactyl\Facades\Activity;
 use Illuminate\Support\Facades\RateLimiter;
+use Illuminate\Support\Facades\Hash;
+use Pterodactyl\Services\Users\UserDeletionService;
+use Pterodactyl\Exceptions\Http\Base\InvalidPasswordProvidedException;
 use Pterodactyl\Services\Users\UserUpdateService;
 use Pterodactyl\Transformers\Api\Client\AccountTransformer;
 use Pterodactyl\Http\Requests\Api\Client\Account\UpdateEmailRequest;
@@ -36,15 +40,95 @@ class AccountController extends ClientApiController
             ->toArray();
     }
 
+    public function updatePreferences(Request $request): JsonResponse
+    {
+        $rules = [
+            'language' => ['required', 'string', Rule::in(array_keys($request->user()->getAvailableLanguages()))],
+            'onboarding_completed' => ['required', 'boolean'],
+        ];
+
+        if (config('features.appearance', true)) {
+            $rules += [
+                'appearance' => ['required', 'array:theme,accent,motion,font_size'],
+                'appearance.theme' => ['required', Rule::in(config('site.appearance.themes'))],
+                'appearance.accent' => ['required', Rule::in(config('site.appearance.accents'))],
+                'appearance.motion' => ['required', 'boolean'],
+                'appearance.font_size' => [
+                'required',
+                'integer',
+                'between:' . config('site.appearance.font_sizes.min') . ',' . config('site.appearance.font_sizes.max'),
+                ],
+            ];
+        }
+
+        $validated = $request->validate($rules);
+
+        $updates = [
+            'language' => $validated['language'],
+            'onboarding_completed' => $validated['onboarding_completed'],
+        ];
+        if (config('features.appearance', true)) {
+            $updates['appearance'] = $validated['appearance'];
+        }
+
+        $user = $request->user();
+        $user->forceFill($updates)->save();
+        Activity::event('user:account.preferences-updated')->subject($user)->log();
+
+        return new JsonResponse([], Response::HTTP_NO_CONTENT);
+    }
+
+    public function hostingStatus(Request $request): JsonResponse
+    {
+        $hasActiveHosting = $request->user()->servers()
+            ->whereNotNull('installed_at')
+            ->where(function ($query) {
+                $query->whereNull('status')->orWhereNotIn('status', [
+                    \Pterodactyl\Models\Server::STATUS_INSTALLING,
+                    \Pterodactyl\Models\Server::STATUS_INSTALL_FAILED,
+                    \Pterodactyl\Models\Server::STATUS_SUSPENDED,
+                    \Pterodactyl\Models\Server::STATUS_RESTORING_BACKUP,
+                ]);
+            })
+            ->exists();
+
+        return new JsonResponse(['has_active_hosting' => $hasActiveHosting]);
+    }
+
+    public function deleteAccount(Request $request, UserDeletionService $deletionService): JsonResponse
+    {
+        $validated = $request->validate([
+            'password' => ['required', 'string', 'max:4096'],
+        ]);
+        $user = $request->user();
+
+        if (!Hash::check($validated['password'], $user->password)) {
+            throw new InvalidPasswordProvidedException(trans('validation.internal.invalid_password'));
+        }
+
+        Activity::event('user:account.deleted')->subject($user)->transaction(function () use ($user, $deletionService) {
+            $user->tokens()->delete();
+            $deletionService->handle($user);
+        });
+
+        $this->manager->guard()->logout();
+        if ($request->hasSession()) {
+            $request->session()->invalidate();
+            $request->session()->regenerateToken();
+        }
+
+        return new JsonResponse([], Response::HTTP_NO_CONTENT);
+    }
+
     /**
      * Update the authenticated user's email address.
      */
     public function updateEmail(UpdateEmailRequest $request): JsonResponse
     {
         $user = $request->user();
-        // Only allow a user to change their email three times in the span
-        // of 24 hours. This prevents malicious users from trying to find
-        // existing accounts in the system by constantly changing their email.
+         
+         
+         
         if (RateLimiter::tooManyAttempts($key = "user:update-email:{$user->uuid}", 3)) {
             throw new TooManyRequestsHttpException(message: 'Your email address has been changed too many times today. Please try again later.');
         }
@@ -77,12 +161,12 @@ class AccountController extends ClientApiController
 
         $guard = $this->manager->guard();
         // If you do not update the user in the session you'll end up working with a
-        // cached copy of the user that does not include the updated password. Do this
-        // to correctly store the new user details in the guard and allow the logout
-        // other devices functionality to work.
+         
+         
+         
         $guard->setUser($user);
 
-        // This method doesn't exist in the stateless Sanctum world.
+         
         if (method_exists($guard, 'logoutOtherDevices')) { // @phpstan-ignore function.alreadyNarrowedType
             $guard->logoutOtherDevices($request->input('password'));
         }

@@ -62,18 +62,18 @@ class SftpAuthenticationController extends Controller
                 try {
                     $key = PublicKeyLoader::loadPublicKey($publicKey);
                 } catch (NoKeyLoadedException) {
-                    // do nothing
+                     
                 }
             }
 
             if (!$key || !$user->sshKeys()->where('fingerprint', $key->getFingerprint('sha256'))->exists()) {
-                // We don't log here because of the way the SFTP system works. This endpoint
-                // will get hit for every key the user provides, which could be 4 or 5. That is
-                // a lot of unnecessary log noise.
-                //
+                 
+                 
+                 
+                 
                 // For now, we'll only log failures due to a bad password as those are not likely
-                // to occur more than once in a session for the user, and are more likely to be of
-                // value to the end user.
+                 
+                 
                 $this->reject($request, is_null($key));
             }
         }
@@ -118,10 +118,10 @@ class SftpAuthenticationController extends Controller
      */
     protected function parseUsername(string $value): array
     {
-        // Reverse the string to avoid issues with usernames that contain periods.
+         
         $parts = explode('.', strrev($value), 2);
 
-        // Unreverse the strings after parsing them apart.
+         
         return [
             'username' => strrev(array_get($parts, 1)),
             'server' => strrev(array_get($parts, 0)),

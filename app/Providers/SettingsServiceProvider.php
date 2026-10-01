@@ -59,8 +59,8 @@ class SettingsServiceProvider extends ServiceProvider
      */
     public function boot(ConfigRepository $config, Encrypter $encrypter, Log $log, SettingsRepositoryInterface $settings): void
     {
-        // Only set the email driver settings from the database if we
-        // are configured using SMTP as the driver.
+         
+         
         if ($config->get('mail.default') === 'smtp') {
             $this->keys = array_merge($this->keys, $this->emailKeys);
         }

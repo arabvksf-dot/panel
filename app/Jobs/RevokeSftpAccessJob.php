@@ -48,9 +48,9 @@ class RevokeSftpAccessJob implements ShouldQueue, ShouldBeUnique
                 $this->target instanceof Server ? [$this->target->uuid] : []
             );
         } catch (DaemonConnectionException) {
-            // Keep retrying this job with a longer and longer backoff until we hit three
-            // attempts at which point we stop and will assume the node is fully offline
-            // and we are just wasting time.
+             
+             
+             
             $this->release($this->attempts() * 10);
         }
     }

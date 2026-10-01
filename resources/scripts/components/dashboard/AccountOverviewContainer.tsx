@@ -9,6 +9,11 @@ import { breakpoint } from '@/theme';
 import styled from 'styled-components/macro';
 import MessageBox from '@/components/MessageBox';
 import { useLocation } from 'react-router-dom';
+import AppearanceSettings from '@/components/dashboard/AppearanceSettings';
+import { useTranslation } from 'react-i18next';
+import DiscordConnection from '@/components/dashboard/DiscordConnection';
+import HostingStatus from '@/components/dashboard/HostingStatus';
+import DeleteAccountForm from '@/components/dashboard/forms/DeleteAccountForm';
 
 const Container = styled.div`
     ${tw`flex flex-wrap`};
@@ -28,6 +33,7 @@ const Container = styled.div`
 
 export default () => {
     const { state } = useLocation<undefined | { twoFactorRedirect?: boolean }>();
+    const { t } = useTranslation('appearance');
 
     return (
         <PageContentBlock title={'Account Overview'}>
@@ -46,6 +52,18 @@ export default () => {
                 </ContentBox>
                 <ContentBox css={tw`md:ml-8 mt-8 md:mt-0`} title={'Two-Step Verification'}>
                     <ConfigureTwoFactorForm />
+                </ContentBox>
+                <ContentBox css={tw`mt-8`} title={t('title')}>
+                    <AppearanceSettings />
+                </ContentBox>
+                <ContentBox css={tw`mt-8`} title={t('discord_title')}>
+                    <DiscordConnection />
+                </ContentBox>
+                <ContentBox css={tw`mt-8`} title={t('hosting_title')}>
+                    <HostingStatus />
+                </ContentBox>
+                <ContentBox css={tw`mt-8`} title={t('account_delete_title')}>
+                    <DeleteAccountForm />
                 </ContentBox>
             </Container>
         </PageContentBlock>

@@ -41,7 +41,7 @@ class HostCreationService
                 'node_id' => array_get($data, 'node_id'),
             ]);
 
-            // Confirm access using the provided credentials before saving data.
+             
             $this->dynamic->set('dynamic', $host);
             $this->databaseManager->connection('dynamic')->select('SELECT 1 FROM dual');
 

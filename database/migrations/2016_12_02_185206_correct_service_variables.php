@@ -10,7 +10,7 @@ class CorrectServiceVariables extends Migration
     public function up(): void
     {
         DB::transaction(function () {
-            // Modify Default Spigot Startup Line
+             
             DB::table('service_options')->where([
                 ['name', 'Spigot'],
                 ['tag', 'spigot'],
@@ -19,7 +19,7 @@ class CorrectServiceVariables extends Migration
                 'startup' => null,
             ]);
 
-            // Correct Spigot Version Checking
+             
             DB::table('service_variables')->where([
                 ['name', 'Spigot Version'],
                 ['env_variable', 'DL_VERSION'],
@@ -29,7 +29,7 @@ class CorrectServiceVariables extends Migration
                 'regex' => '/^(latest|[a-zA-Z0-9_\.-]{3,7})$/',
             ]);
 
-            // Correct Vanilla Version Checking (as well as naming)
+             
             DB::table('service_variables')->where([
                 ['name', 'Server Jar File'],
                 ['env_variable', 'VANILLA_VERSION'],
@@ -40,7 +40,7 @@ class CorrectServiceVariables extends Migration
                 'regex' => '/^(latest|[a-zA-Z0-9_\.-]{3,7})$/',
             ]);
 
-            // Update Sponge Version Checking and Update Default Version
+             
             DB::table('service_variables')->where([
                 ['name', 'Sponge Version'],
                 ['env_variable', 'SPONGE_VERSION'],
@@ -51,7 +51,7 @@ class CorrectServiceVariables extends Migration
                 'regex' => '/^([a-zA-Z0-9.\-_]+)$/',
             ]);
 
-            // Update Bungeecord Version Checking
+             
             DB::table('service_variables')->where([
                 ['name', 'Bungeecord Version'],
                 ['env_variable', 'BUNGEE_VERSION'],
@@ -68,6 +68,6 @@ class CorrectServiceVariables extends Migration
      */
     public function down(): void
     {
-        // do nothing
+         
     }
 }

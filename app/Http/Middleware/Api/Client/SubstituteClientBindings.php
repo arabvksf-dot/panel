@@ -12,8 +12,8 @@ class SubstituteClientBindings extends SubstituteBindings
      */
     public function handle($request, \Closure $next): mixed
     {
-        // Override default behavior of the model binding to use a specific table
-        // column rather than the default 'id'.
+         
+         
         $this->router->bind('server', function ($value) {
             return Server::query()
                 ->when(

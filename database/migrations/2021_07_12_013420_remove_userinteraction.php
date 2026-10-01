@@ -10,7 +10,7 @@ class RemoveUserInteraction extends Migration
      */
     public function up(): void
     {
-        // Remove User Interaction from startup config
+         
         switch (DB::getPdo()->getAttribute(PDO::ATTR_DRIVER_NAME)) {
             case 'mysql':
                 DB::table('eggs')->update([
@@ -30,7 +30,7 @@ class RemoveUserInteraction extends Migration
      */
     public function down(): void
     {
-        // Add blank User Interaction array back to startup config
+         
         switch (DB::getPdo()->getAttribute(PDO::ATTR_DRIVER_NAME)) {
             case 'mysql':
                 DB::table('eggs')->update([

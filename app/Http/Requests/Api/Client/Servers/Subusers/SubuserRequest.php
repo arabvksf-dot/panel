@@ -25,7 +25,7 @@ abstract class SubuserRequest extends ClientApiRequest
         }
 
         $user = $this->route()->parameter('user');
-        // Don't allow a user to edit themselves on the server.
+         
         if ($user instanceof User) {
             if ($user->uuid === $this->user()->uuid) {
                 return false;
@@ -33,7 +33,7 @@ abstract class SubuserRequest extends ClientApiRequest
         }
 
         // If this is a POST request, validate that the user can even assign the permissions they
-        // have selected to assign.
+         
         if ($this->method() === Request::METHOD_POST && $this->has('permissions')) {
             $this->validatePermissionsCanBeAssigned(
                 $this->input('permissions') ?? []
@@ -61,8 +61,8 @@ abstract class SubuserRequest extends ClientApiRequest
         }
 
         // Otherwise, get the current subuser's permission set, and ensure that the
-        // permissions they are trying to assign are not _more_ than the ones they
-        // already have.
+         
+         
         $service = $this->container->make(GetUserPermissionsService::class);
 
         if (count(array_diff($permissions, $service->handle($server, $user))) > 0) {

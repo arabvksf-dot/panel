@@ -11,17 +11,17 @@ class AddForeignKeysToMountServerTable extends Migration
      */
     public function up(): void
     {
-        // Fix the columns having a different type than their relations.
+         
         Schema::table('mount_server', function (Blueprint $table) {
             $table->unsignedInteger('server_id')->change();
             $table->unsignedInteger('mount_id')->change();
         });
 
-        // Fetch an array of node and mount ids to check relations against.
+         
         $servers = DB::table('servers')->select('id')->pluck('id')->toArray();
         $mounts = DB::table('mounts')->select('id')->pluck('id')->toArray();
 
-        // Drop any relations that are missing a server or mount.
+         
         DB::table('mount_server')
             ->select('server_id', 'mount_id')
             ->whereNotIn('server_id', $servers)

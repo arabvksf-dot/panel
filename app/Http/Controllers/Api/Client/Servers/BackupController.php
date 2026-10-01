@@ -69,10 +69,10 @@ class BackupController extends ClientApiController
         $action = $this->initiateBackupService
             ->setIgnoredFiles(explode(PHP_EOL, $request->input('ignored') ?? ''));
 
-        // Only set the lock status if the user even has permission to delete backups,
-        // otherwise ignore this status. This gets a little funky since it isn't clear
-        // how best to allow a user to create a backup that is locked without also preventing
-        // them from just filling up a server with backups that can never be deleted?
+         
+         
+         
+         
         if ($request->user()->can(Permission::ACTION_BACKUP_DELETE, $server)) {
             $action->setIsLocked($request->boolean('is_locked'));
         }
@@ -197,8 +197,8 @@ class BackupController extends ClientApiController
      */
     public function restore(RestoreBackupRequest $request, Server $server, Backup $backup): JsonResponse
     {
-        // Cannot restore a backup unless a server is fully installed and not currently
-        // processing a different backup restoration request.
+         
+         
         if (!is_null($server->status)) {
             throw new BadRequestHttpException('This server is not currently in a state that allows for a backup to be restored.');
         }
@@ -213,13 +213,13 @@ class BackupController extends ClientApiController
 
         $log->transaction(function () use ($backup, $server, $request) {
             // If the backup is for an S3 file we need to generate a unique Download link for
-            // it that will allow Wings to actually access the file.
+             
             if ($backup->disk === Backup::ADAPTER_AWS_S3) {
                 $url = $this->downloadLinkService->handle($backup, $request->user());
             }
 
-            // Update the status right away for the server so that we know not to allow certain
-            // actions against it via the Panel API.
+             
+             
             $server->update(['status' => Server::STATUS_RESTORING_BACKUP]);
 
             $this->daemonRepository->setServer($server)->restore($backup, $url ?? null, $request->input('truncate'));

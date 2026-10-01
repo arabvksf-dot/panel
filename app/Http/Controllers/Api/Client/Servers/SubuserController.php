@@ -105,8 +105,8 @@ class SubuserController extends ClientApiController
                 'revoked' => true,
             ]);
 
-        // Only update the database and hit up the Wings instance to invalidate JTI's if the permissions
-        // have actually changed for the user.
+         
+         
         if ($permissions !== $current) {
             $log->transaction(function () use ($request, $subuser, $server) {
                 $this->repository->update($subuser->id, [

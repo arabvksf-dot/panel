@@ -124,9 +124,9 @@ abstract class Model extends IlluminateModel
         $rules = static::getRules();
         foreach ($rules as $key => &$data) {
             // For each rule in a given field, iterate over it and confirm if the rule
-            // is one for a unique field. If that is the case, append the ID of the current
-            // working model, so we don't run into errors due to the way that field validation
-            // works.
+             
+             
+             
             foreach ($data as &$datum) {
                 if (!is_string($datum) || !Str::startsWith($datum, 'unique')) {
                     continue;
@@ -155,9 +155,9 @@ abstract class Model extends IlluminateModel
 
         $validator = $this->getValidator();
         $validator->setData(
-            // Trying to do self::toArray() here will leave out keys based on the whitelist/blacklist
+             
             // for that model. Doing this will return all the attributes in a format that can
-            // properly be validated.
+             
             $this->addCastAttributesToArray(
                 $this->getAttributes(),
                 $this->getMutatedAttributes()

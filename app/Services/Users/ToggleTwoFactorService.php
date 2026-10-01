@@ -46,13 +46,13 @@ class ToggleTwoFactorService
         }
 
         return $this->connection->transaction(function () use ($user, $toggleState) {
-            // Now that we're enabling 2FA on the account, generate 10 recovery tokens for the account
-            // and store them hashed in the database. We'll return them to the caller so that the user
-            // can see and save them.
-            //
+             
+             
+             
+             
             // If a user is unable to login with a 2FA token they can provide one of these backup codes
-            // which will then be marked as deleted from the database and will also bypass 2FA protections
-            // on their account.
+             
+             
             $tokens = [];
             if ((!$toggleState && !$user->use_totp) || $toggleState) {
                 $inserts = [];
@@ -63,18 +63,18 @@ class ToggleTwoFactorService
                         'user_id' => $user->id,
                         'token' => password_hash($token, PASSWORD_DEFAULT),
                         // insert() won't actually set the time on the models, so make sure we do this
-                        // manually here.
+                         
                         'created_at' => Carbon::now(),
                     ];
 
                     $tokens[] = $token;
                 }
 
-                // Before inserting any new records make sure all of the old ones are deleted to avoid
-                // any issues or storing an unnecessary number of tokens in the database.
+                 
+                 
                 $this->recoveryTokenRepository->deleteWhere(['user_id' => $user->id]);
 
-                // Bulk insert the hashed tokens.
+                 
                 $this->recoveryTokenRepository->insert($inserts);
             }
 

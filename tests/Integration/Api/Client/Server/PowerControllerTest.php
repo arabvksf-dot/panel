@@ -89,7 +89,7 @@ class PowerControllerTest extends ClientApiIntegrationTestCase
             ['restart', Permission::ACTION_CONTROL_RESTART],
             ['kill', Permission::ACTION_CONTROL_STOP],
             // Yes, these spaces are intentional. You should be able to send values with or without
-            // a space on the start/end since we should be trimming the values.
+             
             [' restart', Permission::ACTION_CONTROL_RESTART],
             ['kill ', Permission::ACTION_CONTROL_STOP],
         ];

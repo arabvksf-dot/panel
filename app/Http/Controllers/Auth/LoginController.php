@@ -20,7 +20,9 @@ class LoginController extends AbstractLoginController
      */
     public function index(): View
     {
-        return view('templates/auth.core');
+        return view('templates/auth.core', [
+            'authConfirmationToken' => session('auth_confirmation_token.token_value'),
+        ]);
     }
 
     /**
@@ -31,13 +33,18 @@ class LoginController extends AbstractLoginController
      */
     public function login(Request $request): JsonResponse
     {
+        $credentials = $request->validate([
+            'user' => ['required', 'string', 'max:191'],
+            'password' => ['required', 'string', 'max:4096'],
+        ]);
+
         if ($this->hasTooManyLoginAttempts($request)) {
             $this->fireLockoutEvent($request);
             $this->sendLockoutResponse($request);
         }
 
         try {
-            $username = $request->input('user');
+            $username = $credentials['user'];
 
             /** @var User $user */
             $user = User::query()->where($this->getField($username), $username)->firstOrFail();
@@ -45,11 +52,11 @@ class LoginController extends AbstractLoginController
             $this->sendFailedLoginResponse($request);
         }
 
-        // Ensure that the account is using a valid username and password before trying to
-        // continue. Previously this was handled in the 2FA checkpoint, however that has
-        // a flaw in which you can discover if an account exists simply by seeing if you
-        // can proceed to the next step in the login process.
-        if (!password_verify($request->input('password'), $user->password)) {
+         
+         
+         
+         
+        if (!password_verify($credentials['password'], $user->password)) {
             $this->sendFailedLoginResponse($request, $user);
         }
 

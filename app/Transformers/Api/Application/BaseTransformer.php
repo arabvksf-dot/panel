@@ -26,7 +26,7 @@ abstract class BaseTransformer extends TransformerAbstract
      */
     public function __construct()
     {
-        // Transformers allow for dependency injection on the handle method.
+         
         if (method_exists($this, 'handle')) {
             Container::getInstance()->call([$this, 'handle']);
         }
@@ -72,8 +72,8 @@ abstract class BaseTransformer extends TransformerAbstract
         }
 
         // If this is not a deprecated application token type we can only check that
-        // the user is a root admin at the moment. In a future release we'll be rolling
-        // out more specific permissions for keys.
+         
+         
         if ($token->key_type === ApiKey::TYPE_ACCOUNT) {
             return $this->request->user()->root_admin;
         }

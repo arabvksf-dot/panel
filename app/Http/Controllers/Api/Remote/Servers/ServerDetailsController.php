@@ -43,8 +43,8 @@ class ServerDetailsController extends Controller
         $transfer = $server->transfer;
 
         // If the server is being transferred allow either node to request information about
-        // the server. If the server is not being transferred only the target node is allowed
-        // to fetch these details.
+         
+         
         $valid = $transfer
             ? $node->id === $transfer->old_node || $node->id === $transfer->new_node
             : $node->id === $server->node_id;
@@ -67,12 +67,12 @@ class ServerDetailsController extends Controller
         /** @var Node $node */
         $node = $request->attributes->get('node');
 
-        // Avoid run-away N+1 SQL queries by preloading the relationships that are used
-        // within each of the services called below.
+         
+         
         $servers = Server::query()->with('allocations', 'egg', 'mounts', 'variables', 'location')
             ->where('node_id', $node->id)
             // If you don't cast this to a string you'll end up with a stringified per_page returned in
-            // the metadata, and then Wings will panic crash as a result.
+             
             ->paginate((int) $request->input('per_page', 50));
 
         return new ServerConfigurationCollection($servers);
@@ -90,12 +90,12 @@ class ServerDetailsController extends Controller
     {
         $node = $request->attributes->get('node');
 
-        // Get all the servers that are currently marked as restoring from a backup
-        // on this node that do not have a failed backup tracked in the audit logs table
-        // as well.
-        //
+         
+         
+         
+         
         // For each of those servers we'll track a new audit log entry to mark them as
-        // failed and then update them all to be in a valid state.
+         
         $servers = Server::query()
             ->with([
                 'activity' => fn ($builder) => $builder
@@ -113,8 +113,8 @@ class ServerDetailsController extends Controller
                 $activity = $server->activity->first();
                 if (!is_null($activity)) {
                     if ($subject = $activity->subjects->where('subject_type', 'backup')->first()) {
-                        // Just create a new audit entry for this event and update the server state
-                        // so that power actions, file management, and backups can resume as normal.
+                         
+                         
                         Activity::event('server:backup.restore-failed')
                             ->subject($server, $subject->subject)
                             ->property('name', $subject->subject->name) // @phpstan-ignore property.notFound
@@ -123,8 +123,8 @@ class ServerDetailsController extends Controller
                 }
             }
 
-            // Update any server marked as installing or restoring as being in a normal state
-            // at this point in the process.
+             
+             
             Server::query()->where('node_id', $node->id)
                 ->whereIn('status', [Server::STATUS_INSTALLING, Server::STATUS_RESTORING_BACKUP])
                 ->update(['status' => null]);

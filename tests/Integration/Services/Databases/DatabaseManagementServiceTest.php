@@ -101,7 +101,7 @@ class DatabaseManagementServiceTest extends IntegrationTestCase
         $this->expectExceptionMessage('A database with that name already exists for this server.');
 
         // Try to create a database with the same name as a database on a different host. We expect
-        // this to fail since we don't account for the specific host when checking uniqueness.
+         
         $this->getService()->create($server, [
             'database' => $name,
             'database_host_id' => $host2->id,
@@ -126,9 +126,9 @@ class DatabaseManagementServiceTest extends IntegrationTestCase
         $secondUsername = null;
         $password = null;
 
-        // The value setting inside the closures if to avoid throwing an exception during the
-        // assertions that would get caught by the functions catcher and thus lead to the exception
-        // being swallowed incorrectly.
+         
+         
+         
         $this->repository->expects('createUser')->with(
             \Mockery::on(function ($value) use (&$username) {
                 $username = $value;

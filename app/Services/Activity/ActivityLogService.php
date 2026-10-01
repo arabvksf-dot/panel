@@ -76,7 +76,7 @@ class ActivityLogService
 
             foreach ($this->subjects as $entry) {
                 // If this subject is already tracked in our array of subjects just skip over
-                // it and move on to the next one in the list.
+                 
                 if ($entry->is($subject)) {
                     continue 2;
                 }

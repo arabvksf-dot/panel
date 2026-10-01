@@ -24,7 +24,7 @@ class ServerConfigurationStructureService
     {
         $clone = $server;
         // If any overrides have been set on this call make sure to update them on the
-        // cloned instance so that the configuration generated uses them.
+         
         if (!empty($override)) {
             $clone = $server->fresh();
             foreach ($override as $key => $value) {
@@ -63,8 +63,8 @@ class ServerConfigurationStructureService
             ],
             'container' => [
                 'image' => $server->image,
-                // This field is deprecated — use the value in the "build" block.
-                //
+                 
+                 
                 // TODO: remove this key in V2.
                 'oom_disabled' => $server->oom_disabled,
                 'requires_rebuild' => false,

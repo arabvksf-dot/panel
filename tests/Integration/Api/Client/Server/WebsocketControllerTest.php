@@ -50,7 +50,7 @@ class WebsocketControllerTest extends ClientApiIntegrationTestCase
         /** @var \Pterodactyl\Models\Server $server */
         [$user, $server] = $this->generateTestAccount();
 
-        // Force the node to HTTPS since we want to confirm it gets transformed to wss:// in the URL.
+         
         $server->node->scheme = 'https';
         $server->node->save();
 
@@ -75,15 +75,15 @@ class WebsocketControllerTest extends ClientApiIntegrationTestCase
             'Failed to validate that the JWT data returned was signed using the Node\'s secret key.'
         );
 
-        // The way we generate times for the JWT will truncate the microseconds from the
+         
         // time, but CarbonImmutable::now() will include them, thus causing test failures.
-        //
-        // This little chunk of logic just strips those out by generating a new CarbonImmutable
-        // instance from the current timestamp, which is how the JWT works. We also need to
+         
+         
+         
         // switch to UTC here for consistency.
         $expect = CarbonImmutable::createFromTimestamp(CarbonImmutable::now()->getTimestamp())->timezone('UTC');
 
-        // Check that the claims are generated correctly.
+         
         $this->assertTrue($token->hasBeenIssuedBy(config('app.url')));
         $this->assertTrue($token->isPermittedFor($server->node->getConnectionAddress()));
         $this->assertEquals($expect, $token->claims()->get('iat'));
@@ -123,7 +123,7 @@ class WebsocketControllerTest extends ClientApiIntegrationTestCase
             'Failed to validate that the JWT data returned was signed using the Node\'s secret key.'
         );
 
-        // Check that the claims are generated correctly.
+         
         $this->assertSame($permissions, $token->claims()->get('permissions'));
         $this->assertEquals(JwtScope::Websocket->value, $token->claims()->get('scope'));
     }

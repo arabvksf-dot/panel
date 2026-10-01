@@ -31,6 +31,6 @@ class RemoveDefaultNullValueOnTable extends Migration
      */
     public function down(): void
     {
-        // This should not be rolled back.
+         
     }
 }

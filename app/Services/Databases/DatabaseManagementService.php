@@ -46,7 +46,7 @@ class DatabaseManagementService
      */
     public static function generateUniqueDatabaseName(string $name, int $serverId): string
     {
-        // Max of 48 characters, including the s123_ that we append to the front.
+         
         return sprintf('s%d_%s', $serverId, substr($name, 0, 48 - strlen("s{$serverId}_")));
     }
 
@@ -76,13 +76,13 @@ class DatabaseManagementService
 
         if ($this->validateDatabaseLimit) {
             // If the server has a limit assigned and we've already reached that limit, throw back
-            // an exception and kill the process.
+             
             if (!is_null($server->database_limit) && $server->databases()->count() >= $server->database_limit) {
                 throw new TooManyDatabasesException();
             }
         }
 
-        // Protect against developer mistakes...
+         
         if (empty($data['database']) || !preg_match(self::MATCH_NAME_REGEX, $data['database'])) {
             throw new \InvalidArgumentException('The database name passed to DatabaseManagementService::handle MUST be prefixed with "s{server_id}_".');
         }
@@ -117,9 +117,9 @@ class DatabaseManagementService
             });
         } catch (\Exception $exception) {
             try {
-                // This is actually incorrect, it can be null in the case that the $database model
-                // itself isn't able to be created in Pterodactyl's database.
-                //
+                 
+                 
+                 
                 // @phpstan-ignore-next-line instanceof.alwaysFalse
                 if ($database instanceof Database) {
                     $this->repository->dropDatabase($database->database);
@@ -127,8 +127,8 @@ class DatabaseManagementService
                     $this->repository->flush();
                 }
             } catch (\Throwable $deletionException) { // @phpstan-ignore catch.neverThrown
-                // Do nothing here. We've already encountered an issue before this point so no
-                // reason to prioritize this error over the initial one.
+                 
+                 
             }
 
             throw $exception;

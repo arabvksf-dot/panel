@@ -83,7 +83,7 @@ class AllocationRepository extends EloquentRepository implements AllocationRepos
         }
 
         // If this allocation should not be shared with any other servers get
-        // the data and modify the query as necessary,
+         
         if ($dedicated) {
             $discard = $this->getDiscardableDedicatedAllocations($nodes);
 

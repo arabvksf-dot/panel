@@ -32,7 +32,7 @@ class DatabasePasswordService
         $password = Utilities::randomStringWithSpecialCharacters(24);
 
         $this->connection->transaction(function () use ($database, $password) {
-            // Lock the row to serialize concurrent rotations of the same database.
+             
             $database->newQuery()->whereKey($database->getKey())->lockForUpdate()->firstOrFail();
 
             $database->update([

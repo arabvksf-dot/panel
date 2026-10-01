@@ -12,13 +12,13 @@ $app = require __DIR__ . '/app.php';
 /** @var Pterodactyl\Console\Kernel $kernel */
 $kernel = $app->make(Kernel::class);
 
-/*
- * Bootstrap the kernel and prepare application for testing.
- */
+
+
+
 $kernel->bootstrap();
 
-// Register the collision service provider so that errors during the test
-// setup process are output nicely.
+ 
+ 
 (new Provider())->register();
 
 $output = new ConsoleOutput();
@@ -30,10 +30,10 @@ if (!Str::contains(config("$prefix.database"), 'test')) {
     exit(1);
 }
 
-/*
- * Perform database migrations and reseeding before continuing with
- * running the tests.
- */
+
+
+
+
 if (!env('SKIP_MIGRATIONS')) {
     $output->writeln(PHP_EOL . '<info>Refreshing database for Integration tests...</info>');
     $kernel->call('migrate:fresh');

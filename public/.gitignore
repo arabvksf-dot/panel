@@ -1,4 +1,14 @@
-assets
+!assets/
 assets/*
-!assets/svgs
+!assets/svgs/
 !assets/svgs/*.svg
+!assets/fonts/
+!assets/fonts/*.woff2
+!assets/fonts/OFL.txt
+!assets/theme-tokens.css
+!assets/admin-theme.css
+!assets/logo/
+!assets/logo/logo.png
+!assets/logo/favicon.png
+!assets/images/
+!assets/icons/

@@ -20,26 +20,31 @@ import { ChevronDoubleRightIcon } from '@heroicons/react/solid';
 import 'xterm/css/xterm.css';
 import styles from './style.module.css';
 
-const theme = {
-    background: th`colors.black`.toString(),
-    cursor: 'transparent',
-    black: th`colors.black`.toString(),
-    red: '#E54B4B',
-    green: '#9ECE58',
-    yellow: '#FAED70',
-    blue: '#396FE2',
-    magenta: '#BB80B3',
-    cyan: '#2DDAFD',
-    white: '#d0d0d0',
-    brightBlack: 'rgba(255, 255, 255, 0.2)',
-    brightRed: '#FF5370',
-    brightGreen: '#C3E88D',
-    brightYellow: '#FFCB6B',
-    brightBlue: '#82AAFF',
-    brightMagenta: '#C792EA',
-    brightCyan: '#89DDFF',
-    brightWhite: '#ffffff',
-    selection: '#FAF089',
+const getTerminalTheme = () => {
+    const styles = getComputedStyle(document.documentElement);
+    const color = (token: string) => styles.getPropertyValue(token).trim();
+
+    return {
+        background: color('--color-background'),
+        cursor: 'transparent',
+        black: color('--color-black'),
+        red: color('--terminal-red'),
+        green: color('--terminal-green'),
+        yellow: color('--terminal-yellow'),
+        blue: color('--terminal-blue'),
+        magenta: color('--terminal-magenta'),
+        cyan: color('--terminal-cyan'),
+        white: color('--terminal-white'),
+        brightBlack: color('--terminal-bright-black'),
+        brightRed: color('--terminal-bright-red'),
+        brightGreen: color('--terminal-bright-green'),
+        brightYellow: color('--terminal-bright-yellow'),
+        brightBlue: color('--terminal-bright-blue'),
+        brightMagenta: color('--terminal-bright-magenta'),
+        brightCyan: color('--terminal-bright-cyan'),
+        brightWhite: color('--terminal-bright-white'),
+        selection: color('--terminal-selection'),
+    };
 };
 
 const terminalProps: ITerminalOptions = {
@@ -49,13 +54,12 @@ const terminalProps: ITerminalOptions = {
     fontSize: 12,
     fontFamily: th('fontFamily.mono'),
     rows: 30,
-    theme: theme,
 };
 
 export default () => {
     const TERMINAL_PRELUDE = '\u001b[1m\u001b[33mcontainer@prohost~ \u001b[0m';
     const ref = useRef<HTMLDivElement>(null);
-    const terminal = useMemo(() => new Terminal({ ...terminalProps }), []);
+    const terminal = useMemo(() => new Terminal({ ...terminalProps, theme: getTerminalTheme() }), []);
     const fitAddon = new FitAddon();
     const searchAddon = new SearchAddon();
     const searchBar = new SearchBarAddon({ searchAddon });

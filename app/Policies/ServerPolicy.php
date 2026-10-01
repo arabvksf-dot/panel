@@ -39,6 +39,6 @@ class ServerPolicy
      */
     public function __call(string $name, mixed $arguments)
     {
-        // do nothing
+         
     }
 }

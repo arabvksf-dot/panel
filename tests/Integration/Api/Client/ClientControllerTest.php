@@ -150,8 +150,8 @@ class ClientControllerTest extends ClientApiIntegrationTestCase
             $this->createServerModel(['user_id' => $users[2]->id]),
         ];
 
-        // Set user 0 as a subuser of server 1. Thus, we should get two servers
-        // back in the response when making the API call as user 0.
+         
+         
         Subuser::query()->create([
             'user_id' => $users[0]->id,
             'server_id' => $servers[1]->id,
@@ -181,8 +181,8 @@ class ClientControllerTest extends ClientApiIntegrationTestCase
             $this->createServerModel(['user_id' => $users[2]->id]),
         ];
 
-        // Set user 0 as a subuser of server 1. Thus, we should get two servers
-        // back in the response when making the API call as user 0.
+         
+         
         Subuser::query()->create([
             'user_id' => $users[0]->id,
             'server_id' => $servers[1]->id,
@@ -239,8 +239,8 @@ class ClientControllerTest extends ClientApiIntegrationTestCase
             'permissions' => [Permission::ACTION_WEBSOCKET_CONNECT],
         ]);
 
-        // Only servers 2 & 3 (0 indexed) should be returned by the API at this point. The user making
-        // the request is the owner of server 0, and a subuser of server 1, so they should be excluded.
+         
+         
         $response = $this->actingAs($users[0])->getJson('/api/client?type=admin');
 
         $response->assertOk();
@@ -274,7 +274,7 @@ class ClientControllerTest extends ClientApiIntegrationTestCase
             'permissions' => [Permission::ACTION_WEBSOCKET_CONNECT],
         ]);
 
-        // All servers should be returned.
+         
         $response = $this->actingAs($users[0])->getJson('/api/client?type=admin-all');
 
         $response->assertOk();

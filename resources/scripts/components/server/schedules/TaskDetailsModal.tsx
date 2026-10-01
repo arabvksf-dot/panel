@@ -20,8 +20,8 @@ import FormikSwitch from '@/components/elements/FormikSwitch';
 
 interface Props {
     schedule: Schedule;
-    // If a task is provided we can assume we're editing it. If not provided,
-    // we are creating a new one.
+     
+     
     task?: Task;
 }
 

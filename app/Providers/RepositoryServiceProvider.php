@@ -45,7 +45,7 @@ class RepositoryServiceProvider extends ServiceProvider
      */
     public function register(): void
     {
-        // Eloquent Repositories
+         
         $this->app->bind(AllocationRepositoryInterface::class, AllocationRepository::class);
         $this->app->bind(ApiKeyRepositoryInterface::class, ApiKeyRepository::class);
         $this->app->bind(DatabaseRepositoryInterface::class, DatabaseRepository::class);

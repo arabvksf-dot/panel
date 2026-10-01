@@ -139,12 +139,12 @@ class TelemetryCollectionService
 
                 'eggs' => [
                     'count' => Egg::count(),
-                    // Egg UUIDs are generated randomly on import, so there is not a consistent way to
-                    // determine if servers are using default eggs or not.
+                     
+                     
                     //                    'server_usage' => Egg::all()
-                    //                        ->flatMap(fn (Egg $egg) => [$egg->uuid => $egg->servers->count()])
-                    //                        ->filter(fn (int $count) => $count > 0)
-                    //                        ->toArray(),
+                     
+                     
+                     
                 ],
 
                 'locations' => [
@@ -157,12 +157,12 @@ class TelemetryCollectionService
 
                 'nests' => [
                     'count' => Nest::count(),
-                    // Nest UUIDs are generated randomly on import, so there is not a consistent way to
-                    // determine if servers are using default eggs or not.
+                     
+                     
                     //                    'server_usage' => Nest::all()
-                    //                        ->flatMap(fn (Nest $nest) => [$nest->uuid => $nest->eggs->sum(fn (Egg $egg) => $egg->servers->count())])
-                    //                        ->filter(fn (int $count) => $count > 0)
-                    //                        ->toArray(),
+                     
+                     
+                     
                 ],
 
                 'nodes' => [

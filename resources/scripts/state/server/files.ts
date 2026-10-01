@@ -69,8 +69,8 @@ const files: ServerFileStore = {
 
     cancelFileUpload: action((state, payload) => {
         if (state.uploads[payload]) {
-            // Abort the request if it is still in flight. If it already completed this is
-            // a no-op.
+             
+             
             state.uploads[payload].abort.abort();
 
             delete state.uploads[payload];

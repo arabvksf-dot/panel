@@ -64,7 +64,7 @@ abstract class ApplicationApiRequest extends FormRequest
      */
     public function withValidator(Validator $validator): void
     {
-        // do nothing
+         
     }
 
     /**

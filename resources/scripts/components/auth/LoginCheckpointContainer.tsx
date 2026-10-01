@@ -20,6 +20,7 @@ type OwnProps = RouteComponentProps<Record<string, string | undefined>, StaticCo
 
 type Props = OwnProps & {
     clearAndAddHttpError: ActionCreator<FlashStore['clearAndAddHttpError']['payload']>;
+    confirmationToken: string;
 };
 
 const LoginCheckpointContainer = () => {
@@ -73,8 +74,8 @@ const LoginCheckpointContainer = () => {
 };
 
 const EnhancedForm = withFormik<Props, Values>({
-    handleSubmit: ({ code, recoveryCode }, { setSubmitting, props: { clearAndAddHttpError, location } }) => {
-        loginCheckpoint(location.state?.token || '', code, recoveryCode)
+    handleSubmit: ({ code, recoveryCode }, { setSubmitting, props: { clearAndAddHttpError, confirmationToken } }) => {
+        loginCheckpoint(confirmationToken, code, recoveryCode)
             .then((response) => {
                 if (response.complete) {
                     // @ts-expect-error this is valid
@@ -99,14 +100,22 @@ const EnhancedForm = withFormik<Props, Values>({
 
 export default ({ history, location, ...props }: OwnProps) => {
     const { clearAndAddHttpError } = useFlash();
+    const authToken = (window as Window & { AuthConfirmationToken?: string }).AuthConfirmationToken;
+    const confirmationToken = location.state?.token || authToken;
 
-    if (!location.state?.token) {
+    if (!confirmationToken) {
         history.replace('/auth/login');
 
         return null;
     }
 
     return (
-        <EnhancedForm clearAndAddHttpError={clearAndAddHttpError} history={history} location={location} {...props} />
+        <EnhancedForm
+            clearAndAddHttpError={clearAndAddHttpError}
+            confirmationToken={confirmationToken}
+            history={history}
+            location={location}
+            {...props}
+        />
     );
 };

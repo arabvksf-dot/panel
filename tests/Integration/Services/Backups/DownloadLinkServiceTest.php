@@ -42,7 +42,7 @@ class DownloadLinkServiceTest extends IntegrationTestCase
 
         $timestamp = CarbonImmutable::createFromTimestamp(CarbonImmutable::now()->getTimestamp())->timezone('UTC');
 
-        // Check that the claims are generated correctly.
+         
         $this->assertTrue($token->hasBeenIssuedBy(config('app.url')));
         $this->assertTrue($token->isPermittedFor($server->node->getConnectionAddress()));
         $this->assertEquals($timestamp, $token->claims()->get('iat'));

@@ -33,12 +33,12 @@ class DaemonConnectionException extends DisplayException
 
         if ($useStatusCode) {
             $this->statusCode = is_null($response) ? $this->statusCode : $response->getStatusCode();
-            // There are rare conditions where wings encounters a panic condition and crashes the
-            // request being made after content has already been sent over the wire. In these cases
-            // you can end up with a "successful" response code that is actual an error.
-            //
-            // Handle those better here since we shouldn't ever end up in this exception state and
-            // be returning a 2XX level response.
+             
+             
+             
+             
+             
+             
             if ($this->statusCode < 400) {
                 $this->statusCode = Response::HTTP_BAD_GATEWAY;
             }
@@ -50,8 +50,8 @@ class DaemonConnectionException extends DisplayException
             $message = sprintf('There was an error while communicating with the machine running this server. This error has been logged, please try again. (code: %s) (request_id: %s)', $response->getStatusCode(), $this->requestId ?? '<nil>');
         }
 
-        // Attempt to pull the actual error message off the response and return that if it is not
-        // a 500 level error.
+         
+         
         if ($this->statusCode < 500 && !is_null($response)) {
             $body = json_decode($response->getBody()->__toString(), true);
             $message = sprintf('An error occurred on the remote host: %s. (request id: %s)', $body['error'] ?? $message, $this->requestId ?? '<nil>');

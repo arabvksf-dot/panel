@@ -150,7 +150,7 @@ class Permission extends Model
             ],
         ],
 
-        // Controls permissions for editing or viewing a server's allocations.
+         
         'allocation' => [
             'description' => 'Permissions that control a user\'s ability to modify the port allocations for this server.',
             'keys' => [
@@ -161,7 +161,7 @@ class Permission extends Model
             ],
         ],
 
-        // Controls permissions for editing or viewing a server's startup parameters.
+         
         'startup' => [
             'description' => 'Permissions that control a user\'s ability to view this server\'s startup parameters.',
             'keys' => [
@@ -185,10 +185,10 @@ class Permission extends Model
         'schedule' => [
             'description' => 'Permissions that control a user\'s access to the schedule management for this server.',
             'keys' => [
-                'create' => 'Allows a user to create new schedules for this server.', // task.create-schedule
-                'read' => 'Allows a user to view schedules and the tasks associated with them for this server.', // task.view-schedule, task.list-schedules
-                'update' => 'Allows a user to update schedules and schedule tasks for this server.', // task.edit-schedule, task.queue-schedule, task.toggle-schedule
-                'delete' => 'Allows a user to delete schedules for this server.', // task.delete-schedule
+                'create' => 'Allows a user to create new schedules for this server.',  
+                'read' => 'Allows a user to view schedules and the tasks associated with them for this server.',  
+                'update' => 'Allows a user to update schedules and schedule tasks for this server.',  
+                'delete' => 'Allows a user to delete schedules for this server.',  
             ],
         ],
 

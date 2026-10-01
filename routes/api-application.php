@@ -3,14 +3,14 @@
 use Illuminate\Support\Facades\Route;
 use Pterodactyl\Http\Controllers\Api\Application;
 
-/*
-|--------------------------------------------------------------------------
-| User Controller Routes
-|--------------------------------------------------------------------------
-|
-| Endpoint: /api/application/users
-|
-*/
+
+
+
+
+
+
+
+
 
 Route::group(['prefix' => '/users'], function () {
     Route::get('/', [Application\Users\UserController::class, 'index'])->name('api.application.users');
@@ -23,14 +23,14 @@ Route::group(['prefix' => '/users'], function () {
     Route::delete('/{user:id}', [Application\Users\UserController::class, 'delete']);
 });
 
-/*
-|--------------------------------------------------------------------------
-| Node Controller Routes
-|--------------------------------------------------------------------------
-|
-| Endpoint: /api/application/nodes
-|
-*/
+
+
+
+
+
+
+
+
 Route::group(['prefix' => '/nodes'], function () {
     Route::get('/', [Application\Nodes\NodeController::class, 'index'])->name('api.application.nodes');
     Route::get('/deployable', Application\Nodes\NodeDeploymentController::class);
@@ -49,14 +49,14 @@ Route::group(['prefix' => '/nodes'], function () {
     });
 });
 
-/*
-|--------------------------------------------------------------------------
-| Location Controller Routes
-|--------------------------------------------------------------------------
-|
-| Endpoint: /api/application/locations
-|
-*/
+
+
+
+
+
+
+
+
 Route::group(['prefix' => '/locations'], function () {
     Route::get('/', [Application\Locations\LocationController::class, 'index'])->name('api.applications.locations');
     Route::get('/{location:id}', [Application\Locations\LocationController::class, 'view'])->name('api.application.locations.view');
@@ -67,14 +67,14 @@ Route::group(['prefix' => '/locations'], function () {
     Route::delete('/{location:id}', [Application\Locations\LocationController::class, 'delete']);
 });
 
-/*
-|--------------------------------------------------------------------------
-| Server Controller Routes
-|--------------------------------------------------------------------------
-|
-| Endpoint: /api/application/servers
-|
-*/
+
+
+
+
+
+
+
+
 Route::group(['prefix' => '/servers'], function () {
     Route::get('/', [Application\Servers\ServerController::class, 'index'])->name('api.application.servers');
     Route::get('/{server:id}', [Application\Servers\ServerController::class, 'view'])->name('api.application.servers.view');
@@ -92,7 +92,7 @@ Route::group(['prefix' => '/servers'], function () {
     Route::delete('/{server:id}', [Application\Servers\ServerController::class, 'delete']);
     Route::delete('/{server:id}/{force?}', [Application\Servers\ServerController::class, 'delete']);
 
-    // Database Management Endpoint
+     
     Route::group(['prefix' => '/{server:id}/databases'], function () {
         Route::get('/', [Application\Servers\DatabaseController::class, 'index'])->name('api.application.servers.databases');
         Route::get('/{database:id}', [Application\Servers\DatabaseController::class, 'view'])->name('api.application.servers.databases.view');
@@ -104,19 +104,19 @@ Route::group(['prefix' => '/servers'], function () {
     });
 });
 
-/*
-|--------------------------------------------------------------------------
-| Nest Controller Routes
-|--------------------------------------------------------------------------
-|
-| Endpoint: /api/application/nests
-|
-*/
+
+
+
+
+
+
+
+
 Route::group(['prefix' => '/nests'], function () {
     Route::get('/', [Application\Nests\NestController::class, 'index'])->name('api.application.nests');
     Route::get('/{nest:id}', [Application\Nests\NestController::class, 'view'])->name('api.application.nests.view');
 
-    // Egg Management Endpoint
+     
     Route::group(['prefix' => '/{nest:id}/eggs'], function () {
         Route::get('/', [Application\Nests\EggController::class, 'index'])->name('api.application.nests.eggs');
         Route::get('/{egg:id}', [Application\Nests\EggController::class, 'view'])->name('api.application.nests.eggs.view');

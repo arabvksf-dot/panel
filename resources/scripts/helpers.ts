@@ -4,8 +4,8 @@ export const cleanDirectoryPath = (path: string) => path.replace(/(\/(\/*))|(^$)
 
 export function fileBitsToString(mode: string, directory: boolean): string {
     const m = parseInt(mode, 8);
-
     let buf = '';
+
     'dalTLDpSugct?'.split('').forEach((c, i) => {
         if ((m & (1 << (32 - 1 - i))) !== 0) {
             buf = buf + c;
@@ -13,7 +13,6 @@ export function fileBitsToString(mode: string, directory: boolean): string {
     });
 
     if (buf.length === 0) {
-        // If the file is directory, make sure it has the directory flag.
         if (directory) {
             buf = 'd';
         } else {
@@ -32,11 +31,6 @@ export function fileBitsToString(mode: string, directory: boolean): string {
     return buf;
 }
 
-/**
- * URL-encodes the segments of a path.
- * This allows to use the path as part of a URL while preserving the slashes.
- * @param path the path to encode
- */
 export function encodePathSegments(path: string): string {
     return path
         .split('/')

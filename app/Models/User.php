@@ -28,6 +28,7 @@ use Pterodactyl\Notifications\SendPasswordReset as ResetPasswordNotification;
  *
  * @property int $id
  * @property string|null $external_id
+ * @property string|null $discord_id
  * @property string $uuid
  * @property string $username
  * @property string $email
@@ -123,12 +124,15 @@ class User extends Model implements
      */
     protected $fillable = [
         'external_id',
+        'discord_id',
         'username',
         'email',
         'name_first',
         'name_last',
         'password',
         'language',
+        'appearance',
+        'onboarding_completed',
         'use_totp',
         'totp_secret',
         'totp_authenticated_at',
@@ -143,13 +147,15 @@ class User extends Model implements
         'root_admin' => 'boolean',
         'use_totp' => 'boolean',
         'gravatar' => 'boolean',
+        'appearance' => 'array',
+        'onboarding_completed' => 'boolean',
         'totp_authenticated_at' => 'datetime',
     ];
 
     /**
      * The attributes excluded from the model's JSON form.
      */
-    protected $hidden = ['password', 'remember_token', 'totp_secret', 'totp_authenticated_at'];
+    protected $hidden = ['password', 'remember_token', 'totp_secret', 'totp_authenticated_at', 'discord_id'];
 
     /**
      * Default values for specific fields in the database.
@@ -158,6 +164,8 @@ class User extends Model implements
         'external_id' => null,
         'root_admin' => false,
         'language' => 'en',
+        'appearance' => '{"theme":"dark","accent":"violet","motion":true,"font_size":16}',
+        'onboarding_completed' => false,
         'use_totp' => false,
         'totp_secret' => null,
     ];
@@ -199,7 +207,10 @@ class User extends Model implements
     public function toVueObject(): array
     {
         return Collection::make($this->toArray())->except(['id', 'external_id'])
-            ->merge(['identifier' => $this->identifier])
+            ->merge([
+                'identifier' => $this->identifier,
+                'discord_linked' => !empty($this->discord_id),
+            ])
             ->toArray();
     }
 

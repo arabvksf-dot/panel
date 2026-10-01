@@ -43,13 +43,13 @@ class NodeUpdateService
 
             try {
                 // If we're changing the FQDN for the node, use the newly provided FQDN for the connection
-                // address. This should alleviate issues where the node gets pointed to a "valid" FQDN that
-                // isn't actually running the daemon software, and therefore you can't actually change it
-                // back.
-                //
-                // This makes more sense anyways, because only the Panel uses the FQDN for connecting, the
-                // node doesn't actually care about this.
-                //
+                 
+                 
+                 
+                 
+                 
+                 
+                 
                 // @see https://github.com/pterodactyl/panel/issues/1931
                 $node->fqdn = $updated->fqdn;
 
@@ -57,13 +57,13 @@ class NodeUpdateService
             } catch (DaemonConnectionException $exception) {
                 Log::warning($exception, ['node_id' => $node->id]);
 
-                // Never actually throw these exceptions up the stack. If we were able to change the settings
-                // but something went wrong with Wings we just want to store the update and let the user manually
-                // make changes as needed.
-                //
-                // This avoids issues with proxies such as Cloudflare which will see Wings as offline and then
-                // inject their own response pages, causing this logic to get fucked up.
-                //
+                 
+                 
+                 
+                 
+                 
+                 
+                 
                 // @see https://github.com/pterodactyl/panel/issues/2712
                 return [$updated, true];
             }

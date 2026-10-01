@@ -32,8 +32,8 @@ class StoreDatabaseRequest extends ClientApiRequest implements ClientPermissions
                 'min:3',
                 'max:48',
                 // Yes, I am aware that you could have the same database name across two unique hosts. However,
-                // I don't really care about that for this validation. We just want to make sure it is unique to
-                // the server itself. No need for complexity.
+                 
+                 
                 Rule::unique('databases')->where(function (Builder $query) use ($server) {
                     $query->where('server_id', $server->id)
                         ->where('database', DatabaseManagementService::generateUniqueDatabaseName($this->input('database'), $server->id));

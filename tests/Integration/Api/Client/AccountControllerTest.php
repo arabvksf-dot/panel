@@ -69,8 +69,8 @@ class AccountControllerTest extends ClientApiIntegrationTestCase
             ->putJson($endpoint, ['email' => 'bar@example.com', 'password' => 'password'])
             ->assertTooManyRequests();
 
-        // The other user should still be able to update their email because the throttle
-        // is tied to the account, not to the IP address.
+         
+         
         $this->actingAs($users[1])
             ->putJson($endpoint, ['email' => 'bar+1@example.com', 'password' => 'password'])
             ->assertNoContent();
@@ -123,16 +123,16 @@ class AccountControllerTest extends ClientApiIntegrationTestCase
         $response->assertJsonPath('errors.0.detail', 'The email must be a valid email address.');
 
 
-        /*
-        * RFCs limit certain parts of an email to certain character limits.
-        * A limit of <= 64 for the local, then <= 63 for each domain label.
-        */
+        
+
+
+
         $local = str_repeat(Str::random(10), 6) . '1234';
         $label = str_repeat(Str::random(10), 6) . '1';
 
 
         $response = $this->actingAs($user)->putJson('/api/client/account/email', [
-            'email' => "1$local@$label.$label", // exceed RFC limit for local part
+            'email' => "1$local@$label.$label",  
             'password' => 'password',
         ]);
 
@@ -142,7 +142,7 @@ class AccountControllerTest extends ClientApiIntegrationTestCase
 
 
         $response = $this->actingAs($user)->putJson('/api/client/account/email', [
-            'email' => "$local@1234$label.$label", // exceed RFC limit for label part
+            'email' => "$local@1234$label.$label",  
             'password' => 'password',
         ]);
 
@@ -158,9 +158,9 @@ class AccountControllerTest extends ClientApiIntegrationTestCase
     {
         $user = User::factory()->create();
 
-        // Assign the user to two servers, one as the owner the other as a subuser, both
-        // on different nodes to ensure our logic fires off correctly and the user has their
-        // credentials revoked on both nodes.
+         
+         
+         
         $server = $this->createServerModel(['owner_id' => $user->id]);
         $server2 = $this->createServerModel();
         Subuser::factory()->for($server2)->for($user)->create();

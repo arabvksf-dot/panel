@@ -3,18 +3,15 @@
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>{{ config('app.name', 'Pro HosT') }} - @yield('title')</title>
+        <title>{{ config('site.name') }} - @yield('title')</title>
         <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
         <meta name="_token" content="{{ csrf_token() }}">
 
-        <link rel="apple-touch-icon" sizes="180x180" href="/favicons/apple-touch-icon.png">
-        <link rel="icon" type="image/png" href="/favicons/favicon-32x32.png" sizes="32x32">
-        <link rel="icon" type="image/png" href="/favicons/favicon-16x16.png" sizes="16x16">
-        <link rel="manifest" href="/favicons/manifest.json">
-        <link rel="mask-icon" href="/favicons/safari-pinned-tab.svg" color="#bc6e3c">
-        <link rel="shortcut icon" href="/favicons/favicon.ico">
-        <meta name="msapplication-config" content="/favicons/browserconfig.xml">
-        <meta name="theme-color" content="#0e4688">
+        <link rel="apple-touch-icon" href="{{ config('site.favicon') }}">
+        <link rel="icon" type="image/png" href="{{ config('site.favicon') }}">
+        <meta name="theme-color" content="{{ config('site.theme_color') }}">
+        <link rel="stylesheet" href="/assets/theme-tokens.css">
+        <link rel="preload" href="/assets/fonts/Cairo-arabic.woff2" as="font" type="font/woff2" crossorigin>
 
         @include('layouts.scripts')
 
@@ -26,6 +23,7 @@
             {!! Theme::css('vendor/sweetalert/sweetalert.min.css?t={cache-version}') !!}
             {!! Theme::css('vendor/animate/animate.min.css?t={cache-version}') !!}
             {!! Theme::css('css/pterodactyl.css?t={cache-version}') !!}
+            <link rel="stylesheet" href="/assets/admin-theme.css">
             <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
             <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/2.0.1/css/ionicons.min.css">
 
@@ -39,7 +37,10 @@
         <div class="wrapper">
             <header class="main-header">
                 <a href="{{ route('index') }}" class="logo">
-                    <span>{{ config('app.name', 'Pro HosT') }}</span>
+                    @if(is_file(public_path(ltrim(config('site.logo'), '/'))))
+                        <img src="{{ config('site.logo') }}" alt="" width="32" height="32">
+                    @endif
+                    <span>{{ config('site.name') }}</span>
                 </a>
                 <nav class="navbar navbar-static-top">
                     <a href="#" class="sidebar-toggle" data-toggle="push-menu" role="button">

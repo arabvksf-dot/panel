@@ -125,7 +125,7 @@ class AppSettingsCommand extends Command
             config('pterodactyl.telemetry.enabled', true)
         ) ? 'true' : 'false';
 
-        // Make sure session cookies are set as "secure" when using HTTPS
+         
         if (str_starts_with($this->variables['APP_URL'], 'https://')) {
             $this->variables['SESSION_SECURE_COOKIE'] = 'true';
         }
@@ -147,7 +147,7 @@ class AppSettingsCommand extends Command
             return $item === 'redis';
         });
 
-        // Redis was not selected, no need to continue.
+         
         if (count($items) === 0) {
             return;
         }

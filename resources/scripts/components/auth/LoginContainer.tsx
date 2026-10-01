@@ -10,6 +10,7 @@ import tw from 'twin.macro';
 import Button from '@/components/elements/Button';
 import Reaptcha from 'reaptcha';
 import useFlash from '@/plugins/useFlash';
+import { useTranslation } from 'react-i18next';
 
 interface Values {
     username: string;
@@ -22,6 +23,9 @@ const LoginContainer = ({ history }: RouteComponentProps) => {
 
     const { clearFlashes, clearAndAddHttpError } = useFlash();
     const { enabled: recaptchaEnabled, siteKey } = useStoreState((state) => state.settings.data!.recaptcha);
+    const discordOAuthEnabled = useStoreState((state) => state.settings.data!.discordOAuthEnabled);
+    const { t } = useTranslation('appearance');
+    const discordStatus = new URLSearchParams(window.location.search).get('discord');
 
     useEffect(() => {
         clearFlashes();
@@ -30,8 +34,8 @@ const LoginContainer = ({ history }: RouteComponentProps) => {
     const onSubmit = (values: Values, { setSubmitting }: FormikHelpers<Values>) => {
         clearFlashes();
 
-        // If there is no token in the state yet, request the token and then abort this submit request
-        // since it will be re-submitted when the recaptcha data is returned by the component.
+         
+         
         if (recaptchaEnabled && !token) {
             ref.current!.execute().catch((error) => {
                 console.error(error);
@@ -84,6 +88,14 @@ const LoginContainer = ({ history }: RouteComponentProps) => {
                             Login
                         </Button>
                     </div>
+                    {discordStatus === 'unlinked' && <p role={'alert'}>{t('discord_unlinked')}</p>}
+                    {discordOAuthEnabled && (
+                        <div css={tw`mt-3`}>
+                            <a className={'theme-action'} href={'/auth/discord'} style={{ display: 'block', textAlign: 'center' }}>
+                                {t('discord_sign_in')}
+                            </a>
+                        </div>
+                    )}
                     {recaptchaEnabled && (
                         <Reaptcha
                             ref={ref}

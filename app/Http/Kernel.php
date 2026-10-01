@@ -15,6 +15,7 @@ use Pterodactyl\Http\Middleware\VerifyReCaptcha;
 use Illuminate\Routing\Middleware\ThrottleRequests;
 use Pterodactyl\Http\Middleware\LanguageMiddleware;
 use Pterodactyl\Http\Middleware\SetSecurityHeaders;
+use Pterodactyl\Http\Middleware\DiscordInternalSignature;
 use Illuminate\Foundation\Http\Kernel as HttpKernel;
 use Illuminate\Routing\Middleware\SubstituteBindings;
 use Pterodactyl\Http\Middleware\Activity\TrackAPIKey;
@@ -103,5 +104,6 @@ class Kernel extends HttpKernel
         'bindings' => SubstituteBindings::class,
         'recaptcha' => VerifyReCaptcha::class,
         'node.maintenance' => MaintenanceMiddleware::class,
+        'discord.signature' => DiscordInternalSignature::class,
     ];
 }

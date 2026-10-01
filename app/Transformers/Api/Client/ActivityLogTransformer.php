@@ -19,9 +19,9 @@ class ActivityLogTransformer extends BaseClientTransformer
     public function transform(ActivityLog $model): array
     {
         return [
-            // This is not for security, it is only to provide a unique identifier to
-            // the front-end for each entry to improve rendering performance since there
-            // is nothing else sufficiently unique to key off at this point.
+             
+             
+             
             'id' => sha1($model->id),
             'batch' => $model->batch,
             'event' => $model->event,
@@ -60,7 +60,7 @@ class ActivityLogTransformer extends BaseClientTransformer
                 }
 
                 if (!is_array($value)) {
-                    // Perform some directory normalization at this point.
+                     
                     if ($key === 'directory') {
                         $value = str_replace('//', '/', '/' . trim($value, '/') . '/');
                     }

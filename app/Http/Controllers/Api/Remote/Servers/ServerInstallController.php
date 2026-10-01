@@ -59,7 +59,7 @@ class ServerInstallController extends Controller
             throw new HttpForbiddenException('Requesting node does not have permission to access this server.');
         }
 
-        // Make sure the type of failure is accurate
+         
         if (!$request->boolean('successful')) {
             $status = Server::STATUS_INSTALL_FAILED;
 
@@ -68,7 +68,7 @@ class ServerInstallController extends Controller
             }
         }
 
-        // Keep the server suspended if it's already suspended
+         
         if ($server->status === Server::STATUS_SUSPENDED) {
             $status = Server::STATUS_SUSPENDED;
         }
@@ -76,7 +76,7 @@ class ServerInstallController extends Controller
         $this->repository->update($server->id, ['status' => $status, 'installed_at' => CarbonImmutable::now()], true, true);
 
         // If the server successfully installed, fire installed event.
-        // This logic allows individually disabling install and reinstall notifications separately.
+         
         $isInitialInstall = is_null($server->installed_at);
         if ($isInitialInstall && config()->get('pterodactyl.email.send_install_notification', true)) {
             $this->eventDispatcher->dispatch(new ServerInstalled($server));

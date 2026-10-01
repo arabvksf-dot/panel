@@ -43,9 +43,9 @@ const StartupContainer = () => {
             .includes(variables.dockerImage.toLowerCase());
 
     useEffect(() => {
-        // Since we're passing in initial data this will not trigger on mount automatically. We
-        // want to always fetch fresh information from the API however when we're loading the startup
-        // information.
+         
+         
+         
         mutate();
     }, []);
 

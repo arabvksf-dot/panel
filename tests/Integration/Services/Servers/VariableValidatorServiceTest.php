@@ -72,7 +72,7 @@ class VariableValidatorServiceTest extends IntegrationTestCase
         ]);
 
         $response = $this->getService()->handle($egg->id, [
-            // This is an invalid value, but it shouldn't cause any issues since it should be skipped.
+             
             'BUNGEE_VERSION' => '1.2.3',
             'SERVER_JARFILE' => 'server.jar',
         ]);

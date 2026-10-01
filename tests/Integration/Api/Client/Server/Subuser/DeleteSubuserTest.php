@@ -36,7 +36,7 @@ class DeleteSubuserTest extends ClientApiIntegrationTestCase
         $differentUser = User::factory()->create();
 
         $real = Uuid::uuid4()->toString();
-        // Generate a UUID that lines up with a user in the database if it were to be cast to an int.
+         
         $uuid = ($prefix ?: $differentUser->id) . substr($real, strlen($prefix ?: (string) $differentUser->id));
 
         /** @var User $subuser */

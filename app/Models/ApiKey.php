@@ -163,7 +163,7 @@ class ApiKey extends Model implements HasAbilities
     public function can($ability)
     {
         // todo: this was never initially implemented and only became obvious once
-        //  internal tooling was updated and started catching this mistake.
+         
         return false;
     }
 

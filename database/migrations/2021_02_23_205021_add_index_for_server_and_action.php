@@ -12,13 +12,13 @@ class AddIndexForServerAndAction extends Migration
     public function up(): void
     {
         Schema::table('audit_logs', function (Blueprint $table) {
-            // Doing the index in this order lets me use the action alone without the server
-            // or I can later include the server to also filter down at an even more specific
-            // level.
-            //
-            // Ordering the other way around would require a second index for only "action" in
-            // order to query a specific action type for any server. Remeber, indexes run left
-            // to right in MySQL.
+             
+             
+             
+             
+             
+             
+             
             $table->index(['action', 'server_id']);
         });
     }

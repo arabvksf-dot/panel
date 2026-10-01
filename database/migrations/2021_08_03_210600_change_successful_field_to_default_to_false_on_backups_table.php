@@ -16,7 +16,7 @@ class ChangeSuccessfulFieldToDefaultToFalseOnBackupsTable extends Migration
             $table->boolean('is_successful')->after('uuid')->default(false)->change();
         });
 
-        // Convert currently processing backups to the new format so things don't break.
+         
         DB::table('backups')->select('id')->where('is_successful', 1)->whereNull('completed_at')->update([
             'is_successful' => 0,
         ]);

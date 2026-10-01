@@ -42,9 +42,9 @@ class ServerTransformer extends BaseClientTransformer
                 ? $server->identifier
                 : $server->uuidShort,
             '__deprecated_uuid_short' => $server->uuidShort,
-            // In Pterodactyl 2.0 we'll be replacing `identifier` above with the actual
+             
             // "identifier" used internally. This is a completely different value compared
-            // to the current however, and would be quite a breaking change to URLs.
+             
             'server_identifier' => $server->identifier,
             'internal_id' => $server->id,
             'uuid' => $server->uuid,
@@ -74,9 +74,9 @@ class ServerTransformer extends BaseClientTransformer
                 'backups' => $server->backup_limit,
             ],
             'status' => $server->status,
-            // This field is deprecated, please use "status".
+             
             'is_suspended' => $server->isSuspended(),
-            // This field is deprecated, please use "status".
+             
             'is_installing' => !$server->isInstalled(),
             'is_transferring' => !is_null($server->transfer),
             'skip_scripts' => $server->skip_scripts,
@@ -96,10 +96,10 @@ class ServerTransformer extends BaseClientTransformer
         // While we include this permission, we do need to actually handle it slightly different here
         // for the purpose of keeping things functionally working. If the user doesn't have read permissions
         // for the allocations we'll only return the primary server allocation, and any notes associated
-        // with it will be hidden.
-        //
-        // This allows us to avoid too much permission regression, without also hiding information that
-        // is generally needed for the frontend to make sense when browsing or searching results.
+         
+         
+         
+         
         if (!$user->can(Permission::ACTION_ALLOCATION_READ, $server)) {
             $primary = clone $server->allocation;
             $primary->notes = null;

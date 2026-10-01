@@ -9,20 +9,24 @@ use Pterodactyl\Http\Middleware\RequireTwoFactorAuthentication;
 use Pterodactyl\Http\Middleware\Api\Client\Server\ResourceBelongsToServer;
 use Pterodactyl\Http\Middleware\Api\Client\Server\AuthenticateServerAccess;
 
-/*
-|--------------------------------------------------------------------------
-| Client Control API
-|--------------------------------------------------------------------------
-|
-| Endpoint: /api/client
-|
-*/
+
+
+
+
+
+
+
+
 Route::get('/', [Client\ClientController::class, 'index'])->name('api:client.index');
 Route::get('/permissions', [Client\ClientController::class, 'permissions']);
 
 Route::prefix('/account')->middleware(AccountSubject::class)->group(function () {
     Route::prefix('/')->withoutMiddleware(RequireTwoFactorAuthentication::class)->group(function () {
         Route::get('/', [Client\AccountController::class, 'index'])->name('api:client.account');
+        Route::get('/hosting-status', [Client\AccountController::class, 'hostingStatus'])
+            ->name('api:client.account.hosting-status');
+        Route::put('/preferences', [Client\AccountController::class, 'updatePreferences'])
+            ->name('api:client.account.update-preferences');
         Route::get('/two-factor', [Client\TwoFactorController::class, 'index']);
         Route::post('/two-factor', [Client\TwoFactorController::class, 'store']);
         Route::post('/two-factor/disable', [Client\TwoFactorController::class, 'delete']);
@@ -32,6 +36,9 @@ Route::prefix('/account')->middleware(AccountSubject::class)->group(function () 
         ->middleware('throttle')
         ->name('api:client.account.update-email');
     Route::put('/password', [Client\AccountController::class, 'updatePassword'])->name('api:client.account.update-password');
+    Route::delete('/', [Client\AccountController::class, 'deleteAccount'])
+        ->middleware('throttle')
+        ->name('api:client.account.delete');
 
     Route::get('/activity', Client\ActivityLogController::class)->name('api:client.account.activity');
 
@@ -46,14 +53,14 @@ Route::prefix('/account')->middleware(AccountSubject::class)->group(function () 
     });
 });
 
-/*
-|--------------------------------------------------------------------------
-| Client Control API
-|--------------------------------------------------------------------------
-|
-| Endpoint: /api/client/servers/{server}
-|
-*/
+
+
+
+
+
+
+
+
 Route::group([
     'prefix' => '/servers/{server}',
     'middleware' => [

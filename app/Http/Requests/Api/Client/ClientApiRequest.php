@@ -24,7 +24,7 @@ class ClientApiRequest extends ApplicationApiRequest
             }
 
             // If there is no server available on the reqest, trigger a failure since
-            // we expect there to be one at this point.
+             
             return false;
         }
 

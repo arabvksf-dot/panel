@@ -122,7 +122,7 @@ class ServerViewController extends Controller
             throw new DisplayException('This server is in a failed install state and cannot be recovered. Please delete and re-create the server.');
         }
 
-        // Check if the panel doesn't have at least 2 nodes configured.
+         
         $nodes = $this->nodeRepository->all();
         $canTransfer = false;
         if (count($nodes) >= 2) {

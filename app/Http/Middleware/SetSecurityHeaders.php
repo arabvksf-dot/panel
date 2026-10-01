@@ -18,7 +18,8 @@ class SetSecurityHeaders
         'X-Frame-Options' => 'DENY',
         'X-Content-Type-Options' => 'nosniff',
         'X-XSS-Protection' => '1; mode=block',
-        'Referrer-Policy' => 'no-referrer-when-downgrade',
+        'Referrer-Policy' => 'strict-origin-when-cross-origin',
+        'Permissions-Policy' => 'camera=(), microphone=(), geolocation=()',
     ];
 
     /**
@@ -36,6 +37,18 @@ class SetSecurityHeaders
             if (! $response->headers->has($key)) {
                 $response->headers->set($key, $value);
             }
+        }
+
+        if ($request->isSecure()) {
+            $response->headers->set('Strict-Transport-Security', 'max-age=31536000');
+        }
+
+        $policy = config('security.csp_policy');
+        if (is_string($policy) && $policy !== '') {
+            $header = config('security.csp_report_only')
+                ? 'Content-Security-Policy-Report-Only'
+                : 'Content-Security-Policy';
+            $response->headers->set($header, $policy);
         }
 
         return $response;

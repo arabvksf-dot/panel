@@ -116,8 +116,8 @@ class EggController extends Controller
         $data = array_map(fn ($value) => trim($value), explode("\n", $input ?? ''));
 
         $images = [];
-        // Iterate over the image data provided and convert it into a name => image
-        // pairing that is used to improve the display on the front-end.
+         
+         
         foreach ($data as $value) {
             $parts = explode('|', $value, 2);
             $images[$parts[0]] = empty($parts[1]) ? $parts[0] : $parts[1];

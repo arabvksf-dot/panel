@@ -16,7 +16,7 @@ class AddDockerImageColumn extends Migration
             $table->string('image')->after('daemonSecret');
         });
 
-        // Populate the column
+         
         DB::transaction(function () {
             $servers = DB::table('servers')->select(
                 'servers.id',

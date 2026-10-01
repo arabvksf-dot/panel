@@ -31,11 +31,11 @@ class Fqdn implements Rule, DataAwareRule
     public function passes($attribute, $value): bool
     {
         if (filter_var($value, FILTER_VALIDATE_IP)) {
-            // Check if the scheme is set to HTTPS.
-            //
-            // Unless someone owns their IP blocks and decides to pay who knows how much for a
-            // custom SSL cert, IPs will not be able to use HTTPS.  This should prevent most
-            // home users from making this mistake and wondering why their node is not working.
+             
+             
+             
+             
+             
             if ($this->schemeField && Arr::get($this->data, $this->schemeField) === 'https') {
                 $this->message = 'The :attribute must not be an IP address when HTTPS is enabled.';
 
@@ -45,14 +45,14 @@ class Fqdn implements Rule, DataAwareRule
             return true;
         }
 
-        // Lookup A and AAAA DNS records for the FQDN. Note, this function will also resolve CNAMEs
+         
         // for us automatically, there is no need to manually resolve them here.
-        //
-        // The error suppression is intentional, see https://bugs.php.net/bug.php?id=73149
+         
+         
         $records = @dns_get_record($value, DNS_A + DNS_AAAA);
         // If no records were returned fall back to trying to resolve the value using the hosts DNS
-        // resolution. This will not work for IPv6 which is why we prefer to use `dns_get_record`
-        // first.
+         
+         
         if (!empty($records) || filter_var(gethostbyname($value), FILTER_VALIDATE_IP)) {
             return true;
         }

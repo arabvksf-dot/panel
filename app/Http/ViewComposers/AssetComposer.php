@@ -21,7 +21,15 @@ class AssetComposer
     {
         $view->with('asset', $this->assetHashService);
         $view->with('siteConfiguration', [
-            'name' => config('app.name') ?? 'Pterodactyl',
+            'name' => config('site.name'),
+            'logo' => config('site.logo'),
+            'favicon' => config('site.favicon'),
+            'discordOAuthEnabled' => config('discord.oauth.enabled', false),
+            'aiAssistantEnabled' => config('features.ai_assistant', false) && config('ai.enabled', false),
+            'aiErrorAnalysisEnabled' => config('features.ai_error_analysis', false) && config('ai.enabled', false),
+            'aiMaxHistory' => config('ai.max_history'),
+            'appearanceOptions' => config('site.appearance'),
+            'appearanceEnabled' => config('features.appearance', true),
             'locale' => config('app.locale') ?? 'en',
             'recaptcha' => [
                 'enabled' => config('recaptcha.enabled', false),

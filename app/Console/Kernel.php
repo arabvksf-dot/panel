@@ -31,12 +31,12 @@ class Kernel extends ConsoleKernel
         // https://laravel.com/docs/10.x/upgrade#redis-cache-tags
         $schedule->command('cache:prune-stale-tags')->hourly();
 
-        // Execute scheduled commands for servers every minute, as if there was a normal cron running.
+         
         $schedule->command(ProcessRunnableCommand::class)->everyMinute()->withoutOverlapping();
         $schedule->command(CleanServiceBackupFilesCommand::class)->daily();
 
         if (config('backups.prune_age')) {
-            // Every 30 minutes, run the backup pruning command so that any abandoned backups can be deleted.
+             
             $schedule->command(PruneOrphanedBackupsCommand::class)->everyThirtyMinutes();
         }
 
@@ -65,12 +65,12 @@ class Kernel extends ConsoleKernel
             $settingsRepository->set('app:telemetry:uuid', $uuid);
         }
 
-        // Calculate a fixed time to run the data push at, this will be the same time every day.
+         
         $time = hexdec(str_replace('-', '', substr($uuid, 27))) % 1440;
         $hour = floor($time / 60);
         $minute = $time % 60;
 
-        // Run the telemetry collector.
+         
         $schedule->call(app()->make(TelemetryCollectionService::class))->description('Collect Telemetry')->dailyAt("$hour:$minute");
     }
 }

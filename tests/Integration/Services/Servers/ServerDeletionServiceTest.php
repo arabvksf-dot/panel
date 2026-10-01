@@ -30,7 +30,7 @@ class ServerDeletionServiceTest extends IntegrationTestCase
         parent::setUp();
 
         self::$defaultLogger = config('logging.default');
-        // There will be some log calls during this test, don't actually write to the disk.
+         
         config()->set('logging.default', 'null');
 
         $this->daemonServerRepository = \Mockery::mock(DaemonServerRepository::class);

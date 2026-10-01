@@ -29,7 +29,7 @@ class ClientController extends ClientApiController
         $user = $request->user();
         $transformer = $this->getTransformer(ServerTransformer::class);
 
-        // Start the query builder and ensure we eager load any requested relationships from the request.
+         
         $builder = QueryBuilder::for(
             Server::query()->with($this->getIncludesForTransformer($transformer, ['node']))
         )->allowedFilters([
@@ -41,13 +41,13 @@ class ClientController extends ClientApiController
         ]);
 
         $type = $request->input('type');
-        // Either return all the servers the user has access to because they are an admin `?type=admin` or
-        // just return all the servers the user has access to because they are the owner or a subuser of the
-        // server. If ?type=admin-all is passed all servers on the system will be returned to the user, rather
-        // than only servers they can see because they are an admin.
+         
+         
+         
+         
         if (in_array($type, ['admin', 'admin-all'])) {
             // If they aren't an admin but want all the admin servers don't fail the request, just
-            // make it a query that will never return any results back.
+             
             if (!$user->root_admin) {
                 $builder->whereRaw('1 = 2');
             } else {

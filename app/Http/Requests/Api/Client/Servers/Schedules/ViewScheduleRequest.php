@@ -24,7 +24,7 @@ class ViewScheduleRequest extends ClientApiRequest
         $schedule = $this->route()->parameter('schedule');
 
         // If the schedule does not belong to this server throw a 404 error. Also throw an
-        // error if the task being requested does not belong to the associated schedule.
+         
         if ($server instanceof Server && $schedule instanceof Schedule) {
             $task = $this->route()->parameter('task');
 

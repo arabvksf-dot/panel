@@ -62,7 +62,7 @@ class LoginCheckpointController extends AbstractLoginController
             $this->sendFailedLoginResponse($request, null, self::TOKEN_EXPIRED_MESSAGE);
         }
 
-        // Recovery tokens go through a slightly different pathway for usage.
+         
         if (!is_null($recoveryToken = $request->input('recovery_token'))) {
             if ($this->isValidRecoveryToken($user, $recoveryToken)) {
                 Event::dispatch(new ProvidedAuthenticationToken($user, true));

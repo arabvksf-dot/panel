@@ -126,13 +126,13 @@ class Handler extends ExceptionHandler
         $connections = $this->container->make(Connection::class);
 
         // If we are currently wrapped up inside a transaction, we will roll all the way
-        // back to the beginning. This needs to happen, otherwise session data does not
-        // get properly persisted.
-        //
+         
+         
+         
         // This is kind of a hack, and ideally things like this should be handled as
-        // much as possible at the code level, but there are a lot of spots that do a
-        // ton of actions and were written before this bug discovery was made.
-        //
+         
+         
+         
         // @see https://github.com/pterodactyl/panel/pull/1468
         if ($connections->transactionLevel()) {
             $connections->rollBack(0);
@@ -202,9 +202,9 @@ class Handler extends ExceptionHandler
         ];
 
         if ($e instanceof ModelNotFoundException || $e->getPrevious() instanceof ModelNotFoundException) {
-            // Show a nicer error message compared to the standard "No query results for model"
-            // response that is normally returned. If we are in debug mode this will get overwritten
-            // with a more specific error message to help narrow down things.
+             
+             
+             
             $error['detail'] = 'The requested resource could not be found on the server.';
         }
 

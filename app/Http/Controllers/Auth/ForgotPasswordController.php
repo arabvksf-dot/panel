@@ -18,9 +18,9 @@ class ForgotPasswordController extends Controller
      */
     protected function sendResetLinkFailedResponse(Request $request, $response): JsonResponse
     {
-        // As noted in #358 we will return success even if it failed
-        // to avoid pointing out that an account does or does not
-        // exist on the system.
+         
+         
+         
         event(new FailedPasswordReset($request->ip(), $request->input('email')));
 
         return $this->sendResetLinkResponse($request, Password::RESET_LINK_SENT);

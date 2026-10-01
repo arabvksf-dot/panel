@@ -46,8 +46,8 @@ class ServerTransferController extends Controller
         /* @var Node $node */
         Assert::isInstanceOf($node = $request->attributes->get('node'), Node::class);
 
-        // Either node can tell the panel that the transfer has failed. Only the new node
-        // can tell the panel that it was successful.
+         
+         
         if (! $node->is($transfer->newNode) && ! $node->is($transfer->oldNode)) {
             throw new HttpForbiddenException('Requesting node does not have permission to access this server.');
         }
@@ -71,8 +71,8 @@ class ServerTransferController extends Controller
         /* @var Node $node */
         Assert::isInstanceOf($node = $request->attributes->get('node'), Node::class);
 
-        // Only the new node communicates a successful state to the panel, so we should
-        // not allow the old node to hit this endpoint.
+         
+         
         if (! $node->is($transfer->newNode)) {
             throw new HttpForbiddenException('Requesting node does not have permission to access this server.');
         }
@@ -81,8 +81,8 @@ class ServerTransferController extends Controller
         $server = $this->connection->transaction(function () use ($server, $transfer) {
             $allocations = array_merge([$transfer->old_allocation], $transfer->old_additional_allocations);
 
-            // Remove the old allocations for the server and re-assign the server to the new
-            // primary allocation and node.
+             
+             
             Allocation::query()->whereIn('id', $allocations)->update(['server_id' => null]);
             $server->update([
                 'allocation_id' => $transfer->new_allocation,
@@ -95,8 +95,8 @@ class ServerTransferController extends Controller
             return $server;
         });
 
-        // Delete the server from the old node making sure to point it to the old node so
-        // that we do not delete it from the new node the server was transferred to.
+         
+         
         try {
             $this->daemonServerRepository
                 ->setServer($server)

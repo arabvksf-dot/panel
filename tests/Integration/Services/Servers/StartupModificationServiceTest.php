@@ -93,8 +93,8 @@ class StartupModificationServiceTest extends IntegrationTestCase
         $this->assertSame('sample startup', $response->startup);
         $this->assertSame('docker/hodor', $response->image);
         $this->assertTrue($response->skip_scripts);
-        // Make sure we don't revert back to a lurking bug that causes servers to get marked
-        // as not installed when you modify the startup...
+         
+         
         $this->assertTrue($response->isInstalled());
     }
 
@@ -108,7 +108,7 @@ class StartupModificationServiceTest extends IntegrationTestCase
         $server->loadMissing(['egg', 'variables']);
 
         $clone = $this->cloneEggAndVariables($server->egg);
-        // This makes the BUNGEE_VERSION variable not user editable.
+         
         $clone->variables()->first()->update([
             'user_editable' => false,
         ]);

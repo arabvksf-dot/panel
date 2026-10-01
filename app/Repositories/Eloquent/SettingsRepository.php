@@ -26,7 +26,7 @@ class SettingsRepository extends EloquentRepository implements SettingsRepositor
      */
     public function set(string $key, ?string $value = null)
     {
-        // Clear item from the cache.
+         
         $this->clearCache($key);
         $this->withoutFreshModel()->updateOrCreate(['key' => $key], ['value' => $value ?? '']);
 
@@ -39,7 +39,7 @@ class SettingsRepository extends EloquentRepository implements SettingsRepositor
     public function get(string $key, mixed $default = null): mixed
     {
         // If item has already been requested return it from the cache. If
-        // we already know it is missing, immediately return the default value.
+         
         if (array_key_exists($key, self::$cache)) {
             return self::$cache[$key];
         } elseif (array_key_exists($key, self::$databaseMiss)) {
